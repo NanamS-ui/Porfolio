@@ -51,3 +51,17 @@ export type ContactMessage = {
   subject: string;
   message: string;
 };
+
+export type Formation = {
+  id: string;
+  institution: string;
+  logo_url: string | null;
+  diploma: string;
+  period: string;
+  location: string | null;
+  description: string | null;
+  debouches: string[]; // tableau de débouchés
+  order_index: number;
+  created_at: string;
+  updated_at: string;
+};

@@ -37,9 +37,6 @@ export default function ExperienceSection() {
     <section id="experience" className="py-32 px-4 bg-gradient-to-b from-slate-50 to-white">
       <div className="max-w-5xl mx-auto">
         <div className="text-center space-y-6 mb-20">
-          <div className="inline-block px-4 py-2 bg-slate-100 rounded-full text-sm font-medium text-slate-700 mb-4">
-            Parcours
-          </div>
           <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-slate-900">
             Expérience
           </h2>

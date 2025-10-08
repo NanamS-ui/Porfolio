@@ -20,7 +20,9 @@ export default function Skills() {
       .from('skills')
       .select('*')
       .order('category', { ascending: true })
-      .order('order_index', { ascending: true });
+      .order('order_index', { ascending: true })
+        .order('proficiency', { ascending: false })
+    ;
 
     if (data && !error) {
       setSkills(data);

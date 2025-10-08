@@ -121,12 +121,26 @@ CREATE TABLE IF NOT EXISTS contact_messages (
   created_at timestamptz DEFAULT now()
 );
 
+CREATE TABLE IF NOT EXISTS formations (
+                                          id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+    institution text NOT NULL,
+    logo_url text,
+    diploma text NOT NULL,
+    period text NOT NULL,
+    location text,
+    description text,
+    debouches text[] NOT NULL DEFAULT '{}', -- liste de débouchés
+    order_index integer DEFAULT 0,
+    created_at timestamptz DEFAULT now(),
+    updated_at timestamptz DEFAULT now()
+    );
+
 -- Enable RLS on all tables
 ALTER TABLE projects ENABLE ROW LEVEL SECURITY;
 ALTER TABLE skills ENABLE ROW LEVEL SECURITY;
 ALTER TABLE experience ENABLE ROW LEVEL SECURITY;
 ALTER TABLE contact_messages ENABLE ROW LEVEL SECURITY;
-
+ALTER TABLE formations ENABLE ROW LEVEL SECURITY;
 -- Public read access for portfolio content
 CREATE POLICY "Anyone can view projects"
   ON projects FOR SELECT
@@ -179,6 +193,17 @@ CREATE POLICY "Authenticated users can update contact messages"
   USING (true)
   WITH CHECK (true);
 
+CREATE POLICY "Anyone can view formations"
+  ON formations FOR SELECT
+                               TO anon, authenticated
+                               USING (true);
+
+CREATE POLICY "Authenticated users can manage formations"
+  ON formations FOR ALL
+  TO authenticated
+  USING (true)
+  WITH CHECK (true);
+
 -- Create indexes for better query performance
 CREATE INDEX IF NOT EXISTS projects_featured_idx ON projects(featured);
 CREATE INDEX IF NOT EXISTS projects_category_idx ON projects(category);
@@ -187,3 +212,5 @@ CREATE INDEX IF NOT EXISTS skills_category_idx ON skills(category);
 CREATE INDEX IF NOT EXISTS experience_is_current_idx ON experience(is_current);
 CREATE INDEX IF NOT EXISTS contact_messages_read_idx ON contact_messages(read);
 CREATE INDEX IF NOT EXISTS contact_messages_created_at_idx ON contact_messages(created_at DESC);
+CREATE INDEX IF NOT EXISTS formations_order_idx ON formations(order_index);
+CREATE INDEX IF NOT EXISTS formations_institution_idx ON formations(institution);
