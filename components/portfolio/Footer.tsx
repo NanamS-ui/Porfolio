@@ -144,6 +144,45 @@ export default function Footer() {
                     <Mail className="h-4 w-4 text-blue-400" />
                     <span className="text-sm">rahajamananaralisontoky@gmail.com</span>
                   </div>
+
+                  <div className="flex items-center gap-3 text-slate-300">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-4 w-4 text-green-500"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+                      <path d="M20.52 3.48A11.78 11.78 0 0 0 12 .23a11.75 11.75 0 0 0-10.2 17.6L.22 24l6.3-1.6A11.75 11.75 0 0 0 12 23.77a11.78 11.78 0 0 0 8.52-20.29ZM12 21.39a9.37 9.37 0 0 1-4.77-1.3l-.34-.2-3.74 1 1-3.64-.24-.37a9.43 9.43 0 1 1 8.09 4.51Zm5.34-7.12c-.29-.15-1.73-.85-2-.94s-.46-.15-.66.15-.76.94-.93 1.14-.34.22-.63.07a7.63 7.63 0 0 1-2.24-1.38 8.46 8.46 0 0 1-1.56-1.93c-.16-.29 0-.45.12-.6s.29-.34.44-.52a1.94 1.94 0 0 0 .3-.48.53.53 0 0 0 0-.52c-.07-.15-.66-1.59-.9-2.18s-.48-.5-.66-.51h-.56a1.07 1.07 0 0 0-.78.37 3.28 3.28 0 0 0-1 2.43 5.68 5.68 0 0 0 1.18 3.02 12.9 12.9 0 0 0 5 4.47 15.46 15.46 0 0 0 1.52.56 3.64 3.64 0 0 0 1.67.11 2.7 2.7 0 0 0 1.77-1.26 2.21 2.21 0 0 0 .15-1.26c-.07-.15-.26-.22-.55-.37Z" />
+                    </svg>
+                    <a
+                        href="https://wa.me/261349364373"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm hover:text-green-400 transition-colors duration-200"
+                    >
+                      +261 34 93 643 73
+                    </a>
+                  </div>
+
+                  <div className="flex items-center gap-3 text-slate-300">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-4 w-4 text-green-500"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+                      <path d="M20.52 3.48A11.78 11.78 0 0 0 12 .23a11.75 11.75 0 0 0-10.2 17.6L.22 24l6.3-1.6A11.75 11.75 0 0 0 12 23.77a11.78 11.78 0 0 0 8.52-20.29ZM12 21.39a9.37 9.37 0 0 1-4.77-1.3l-.34-.2-3.74 1 1-3.64-.24-.37a9.43 9.43 0 1 1 8.09 4.51Zm5.34-7.12c-.29-.15-1.73-.85-2-.94s-.46-.15-.66.15-.76.94-.93 1.14-.34.22-.63.07a7.63 7.63 0 0 1-2.24-1.38 8.46 8.46 0 0 1-1.56-1.93c-.16-.29 0-.45.12-.6s.29-.34.44-.52a1.94 1.94 0 0 0 .3-.48.53.53 0 0 0 0-.52c-.07-.15-.66-1.59-.9-2.18s-.48-.5-.66-.51h-.56a1.07 1.07 0 0 0-.78.37 3.28 3.28 0 0 0-1 2.43 5.68 5.68 0 0 0 1.18 3.02 12.9 12.9 0 0 0 5 4.47 15.46 15.46 0 0 0 1.52.56 3.64 3.64 0 0 0 1.67.11 2.7 2.7 0 0 0 1.77-1.26 2.21 2.21 0 0 0 .15-1.26c-.07-.15-.26-.22-.55-.37Z" />
+                    </svg>
+                    <a
+                        href="https://wa.me/261377764796"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm hover:text-green-400 transition-colors duration-200"
+                    >
+                      +261 37 77 647 96
+                    </a>
+                  </div>
+
                   <div className="flex items-center gap-3 text-slate-300">
                     <div className="w-4 h-4 bg-gradient-to-br from-green-400 to-blue-400 rounded-full"></div>
                     <span className="text-sm">Antananarivo, Madagascar</span>
