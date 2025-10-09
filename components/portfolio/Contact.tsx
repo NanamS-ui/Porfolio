@@ -23,37 +23,51 @@ export default function Contact() {
     e.preventDefault();
     setLoading(true);
 
-    const { error } = await supabase.from('contact_messages').insert([formData]);
+    try {
+      // Étape 1 : enregistrer dans la base de données
+      const { error: dbError } = await supabase
+          .from('contact_messages')
+          .insert([formData]);
 
-    const response = await fetch(
-        `${process.env.NEXT_PUBLIC_SUPABASE_URL}/functions/v1/send-contact-email`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`,
-          },
-          body: JSON.stringify(formData),
-        }
-    );
+      if (dbError) throw dbError;
 
-    if (error || !response.ok) {
+      // Étape 2 : appeler la fonction Deno pour envoyer l’email
+      const response = await fetch(
+          `${process.env.NEXT_PUBLIC_SUPABASE_URL}/functions/v1/send-contact-email`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`,
+            },
+            body: JSON.stringify(formData),
+          }
+      );
+
+      const result = await response.json();
+
+      if (!response.ok || result.error) {
+        throw new Error(result.error || "Erreur lors de l’envoi de l’email.");
+      }
+
+      // Étape 3 : afficher le succès et réinitialiser le formulaire
       toast({
-        title: 'Erreur',
-        description: 'Une erreur est survenue. Veuillez réessayer.',
-        variant: 'destructive',
+        title: "Message envoyé ✅",
+        description: "Merci pour votre message ! Je vous répondrai dès que possible.",
       });
-    } else {
+
+      setFormData({ name: "", email: "", subject: "", message: "" });
+    } catch (error: any) {
+      console.error("Erreur contact:", error.message);
       toast({
-        title: 'Message envoyé !',
-        description: 'Je vous répondrai dans les plus brefs délais.',
+        title: "Erreur ❌",
+        description: "Impossible d’envoyer le message. Veuillez réessayer.",
+        variant: "destructive",
       });
-      setFormData({ name: '', email: '', subject: '', message: '' });
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   };
-
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
