@@ -23,11 +23,21 @@ export default function Contact() {
     e.preventDefault();
     setLoading(true);
 
-    const { error } = await supabase
-      .from('contact_messages')
-      .insert([formData]);
+    const { error } = await supabase.from('contact_messages').insert([formData]);
 
-    if (error) {
+    const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SUPABASE_URL}/functions/v1/send-contact-email`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`,
+          },
+          body: JSON.stringify(formData),
+        }
+    );
+
+    if (error || !response.ok) {
       toast({
         title: 'Erreur',
         description: 'Une erreur est survenue. Veuillez réessayer.',
@@ -43,6 +53,7 @@ export default function Contact() {
 
     setLoading(false);
   };
+
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
