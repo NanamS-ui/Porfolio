@@ -80,7 +80,7 @@ export default function Hero() {
                 variant="outline"
                 className="border-slate-300 hover:border-slate-400 hover:bg-slate-50 transition-all duration-300"
             >
-              <a href="https://nrqjrzgmifkjamiikcxd.supabase.co/storage/v1/object/public/CV_portfolio/CV_Toky.pdf" download>
+              <a href="https://nrqjrzgmifkjamiikcxd.supabase.co/storage/v1/object/public/CV_portfolio/CV_Toky%20(1).pdf" download>
                 <Download className="mr-2 h-5 w-5" />
                 Télécharger mon CV
               </a>
