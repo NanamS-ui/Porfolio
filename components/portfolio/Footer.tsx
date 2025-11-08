@@ -39,7 +39,7 @@ export default function Footer() {
       color: "hover:bg-blue-600 hover:text-white"
     },
     {
-      href: "mailto:rahajamananaralisontoky@gmail.com",
+      href: "mailto:rahajamananatoky@gmail.com",
       icon: Mail,
       label: "Email",
       color: "hover:bg-red-600 hover:text-white"
