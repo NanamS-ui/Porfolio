@@ -142,8 +142,13 @@ export default function Footer() {
                 <div className="space-y-3">
                   <div className="flex items-center gap-3 text-slate-300">
                     <Mail className="h-4 w-4 text-blue-400" />
-                    <span className="text-sm">rahajamananaralisontoky@gmail.com</span>
+                    <a href="mailto:rahajamananatoky@gmail.com" target="_blank"
+                       rel="noopener noreferrer"
+                       className="text-sm hover:text-green-400 transition-colors duration-200">
+                      rahajamananatoky@gmail.com
+                    </a>
                   </div>
+
 
                   <div className="flex items-center gap-3 text-slate-300">
                     <svg

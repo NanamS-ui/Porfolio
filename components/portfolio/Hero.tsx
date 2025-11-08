@@ -108,7 +108,7 @@ export default function Hero() {
             </a>
 
             <a
-                href="mailto:rahajamananaralisontoky@gmail.com"
+                href="mailto:rahajamananatoky@gmail.com"
                 className="p-3 rounded-full bg-white border border-slate-200 hover:border-slate-400 hover:shadow-md transition-all duration-300"
             >
               <Mail className="h-6 w-6 text-slate-700" />
