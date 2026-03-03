@@ -7,6 +7,8 @@ import { Badge } from '@/components/ui/badge';
 import { Loader2, MapPin, Calendar } from 'lucide-react';
 import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
+import { motion } from 'framer-motion';
+import { AnimatedSection } from '@/components/animations/MotionComponents';
 
 export default function ExperienceSection() {
   const [experiences, setExperiences] = useState<Experience[]>([]);
@@ -34,79 +36,126 @@ export default function ExperienceSection() {
   };
 
   return (
-    <section id="experience" className="py-32 px-4 bg-gradient-to-b from-slate-50 to-white">
+    <section id="experience" className="py-32 px-4 bg-gradient-to-b from-slate-50 to-white overflow-hidden">
       <div className="max-w-5xl mx-auto">
-        <div className="text-center space-y-6 mb-20">
+        <AnimatedSection className="text-center space-y-6 mb-20">
           <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-slate-900">
             Expérience
           </h2>
           <p className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
             Mon parcours professionnel et les projets sur lesquels j'ai eu la chance de travailler
           </p>
-        </div>
+        </AnimatedSection>
 
         {loading ? (
           <div className="flex justify-center items-center py-20">
-            <Loader2 className="h-10 w-10 animate-spin text-slate-400" />
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+            >
+              <Loader2 className="h-10 w-10 text-slate-400" />
+            </motion.div>
           </div>
         ) : (
           <div className="relative">
-            <div className="absolute left-8 top-0 bottom-0 w-1 bg-gradient-to-b from-slate-900 via-slate-300 to-slate-900 hidden md:block rounded-full" />
+            <motion.div
+              className="absolute left-8 top-0 bottom-0 w-1 bg-gradient-to-b from-slate-900 via-slate-300 to-slate-900 hidden md:block rounded-full"
+              initial={{ scaleY: 0, originY: 0 }}
+              whileInView={{ scaleY: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
+            />
 
             <div className="space-y-16">
               {experiences.map((exp, index) => (
-                <div key={exp.id} className="relative">
-                  <div className="hidden md:block absolute left-8 top-8 w-5 h-5 bg-slate-900 rounded-full -translate-x-[9px] ring-4 ring-white shadow-lg" />
+                <motion.div
+                  key={exp.id}
+                  className="relative"
+                  initial={{ opacity: 0, x: -50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, margin: '-80px' }}
+                  transition={{
+                    duration: 0.6,
+                    delay: index * 0.15,
+                    ease: [0.22, 1, 0.36, 1]
+                  }}
+                >
+                  <motion.div
+                    className="hidden md:block absolute left-8 top-8 w-5 h-5 bg-slate-900 rounded-full -translate-x-[9px] ring-4 ring-white shadow-lg"
+                    initial={{ scale: 0 }}
+                    whileInView={{ scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ type: 'spring', stiffness: 300, delay: index * 0.15 + 0.3 }}
+                  />
 
-                  <Card className="md:ml-24 border-slate-200 hover:shadow-2xl hover:border-slate-300 transition-all duration-500 bg-white">
-                    <CardHeader>
-                      <div className="flex flex-wrap gap-3 items-start justify-between mb-2">
-                        <div className="space-y-1">
-                          <CardTitle className="text-2xl text-slate-900">
-                            {exp.position}
-                          </CardTitle>
-                          <CardDescription className="text-lg font-medium text-slate-700">
-                            {exp.company}
-                          </CardDescription>
-                        </div>
-                        {exp.is_current && (
-                          <Badge className="bg-green-600 hover:bg-green-700">
-                            En cours
-                          </Badge>
-                        )}
-                      </div>
-
-                      <div className="flex flex-wrap gap-4 text-sm text-slate-500">
-                        <div className="flex items-center gap-1">
-                          <Calendar className="h-4 w-4" />
-                          <span>
-                            {formatDate(exp.start_date)} - {exp.end_date ? formatDate(exp.end_date) : 'Présent'}
-                          </span>
-                        </div>
-                        {exp.location && (
-                          <div className="flex items-center gap-1">
-                            <MapPin className="h-4 w-4" />
-                            <span>{exp.location}</span>
+                  <motion.div
+                    whileHover={{ y: -4 }}
+                    transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+                  >
+                    <Card className="md:ml-24 border-slate-200 hover:shadow-2xl hover:border-slate-300 transition-all duration-500 bg-white">
+                      <CardHeader>
+                        <div className="flex flex-wrap gap-3 items-start justify-between mb-2">
+                          <div className="space-y-1">
+                            <CardTitle className="text-2xl text-slate-900">
+                              {exp.position}
+                            </CardTitle>
+                            <CardDescription className="text-lg font-medium text-slate-700">
+                              {exp.company}
+                            </CardDescription>
                           </div>
-                        )}
-                      </div>
-                    </CardHeader>
+                          {exp.is_current && (
+                            <motion.div
+                              initial={{ scale: 0 }}
+                              animate={{ scale: 1 }}
+                              transition={{ type: 'spring', delay: 0.5 }}
+                            >
+                              <Badge className="bg-green-600 hover:bg-green-700">
+                                En cours
+                              </Badge>
+                            </motion.div>
+                          )}
+                        </div>
 
-                    <CardContent className="space-y-4">
-                      <p className="text-slate-600 leading-relaxed">
-                        {exp.description}
-                      </p>
+                        <div className="flex flex-wrap gap-4 text-sm text-slate-500">
+                          <div className="flex items-center gap-1">
+                            <Calendar className="h-4 w-4" />
+                            <span>
+                              {formatDate(exp.start_date)} - {exp.end_date ? formatDate(exp.end_date) : 'Présent'}
+                            </span>
+                          </div>
+                          {exp.location && (
+                            <div className="flex items-center gap-1">
+                              <MapPin className="h-4 w-4" />
+                              <span>{exp.location}</span>
+                            </div>
+                          )}
+                        </div>
+                      </CardHeader>
 
-                      <div className="flex flex-wrap gap-2">
-                        {exp.technologies.map((tech, i) => (
-                          <Badge key={i} variant="secondary" className="text-xs">
-                            {tech}
-                          </Badge>
-                        ))}
-                      </div>
-                    </CardContent>
-                  </Card>
-                </div>
+                      <CardContent className="space-y-4">
+                        <p className="text-slate-600 leading-relaxed">
+                          {exp.description}
+                        </p>
+
+                        <div className="flex flex-wrap gap-2">
+                          {exp.technologies.map((tech, i) => (
+                            <motion.div
+                              key={i}
+                              initial={{ opacity: 0, scale: 0 }}
+                              whileInView={{ opacity: 1, scale: 1 }}
+                              viewport={{ once: true }}
+                              transition={{ delay: i * 0.05 + 0.3 }}
+                            >
+                              <Badge variant="secondary" className="text-xs">
+                                {tech}
+                              </Badge>
+                            </motion.div>
+                          ))}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+                </motion.div>
               ))}
             </div>
           </div>

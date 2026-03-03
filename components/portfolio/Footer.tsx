@@ -2,6 +2,7 @@
 
 import { Github, Linkedin, Mail, Heart, ArrowUp, Code, Sparkles } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -56,14 +57,22 @@ export default function Footer() {
   return (
       <>
         {/* Scroll to top button */}
-        {showScrollTop && (
-            <button
+        <AnimatePresence>
+          {showScrollTop && (
+            <motion.button
                 onClick={scrollToTop}
-                className="fixed bottom-8 right-8 z-50 p-3 bg-gradient-to-r from-slate-900 to-slate-800 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 animate-bounce-slow"
+                className="fixed bottom-8 right-8 z-50 p-3 bg-gradient-to-r from-slate-900 to-slate-800 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
+                initial={{ opacity: 0, scale: 0, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0, y: 20 }}
+                whileHover={{ scale: 1.15 }}
+                whileTap={{ scale: 0.9 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
             >
               <ArrowUp className="h-5 w-5" />
-            </button>
-        )}
+            </motion.button>
+          )}
+        </AnimatePresence>
 
         <footer className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white py-16 px-4 relative overflow-hidden">
           {/* Background decorations */}
@@ -74,7 +83,13 @@ export default function Footer() {
           </div>
 
           <div className="max-w-7xl mx-auto relative">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+            <motion.div
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            >
               {/* Brand section */}
               <div className="lg:col-span-2 space-y-6">
                 <div className="space-y-4">
@@ -97,17 +112,22 @@ export default function Footer() {
                   <h4 className="text-lg font-semibold text-white">Me suivre</h4>
                   <div className="flex gap-4">
                     {socialLinks.map((social, index) => (
-                        <a
+                        <motion.a
                             key={social.label}
                             href={social.href}
                             target={social.href.startsWith('mailto:') ? '_self' : '_blank'}
                             rel="noopener noreferrer"
-                            className={`group p-3 rounded-xl bg-slate-800/50 backdrop-blur-sm border border-slate-700 hover:border-slate-600 transition-all duration-300 transform hover:scale-110 hover:-translate-y-1 ${social.color}`}
-                            style={{ animationDelay: `${index * 0.1}s` }}
+                            className={`group p-3 rounded-xl bg-slate-800/50 backdrop-blur-sm border border-slate-700 hover:border-slate-600 transition-all duration-300 ${social.color}`}
+                            whileHover={{ scale: 1.15, y: -3 }}
+                            whileTap={{ scale: 0.9 }}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: index * 0.1, type: 'spring', stiffness: 200 }}
                         >
-                          <social.icon className="h-5 w-5 group-hover:animate-pulse" />
+                          <social.icon className="h-5 w-5" />
                           <span className="sr-only">{social.label}</span>
-                        </a>
+                        </motion.a>
                     ))}
                   </div>
                 </div>
@@ -119,18 +139,22 @@ export default function Footer() {
                 <ul className="space-y-3">
                   {navigationLinks.map((link, index) => (
                       <li key={link.label}>
-                        <a
+                        <motion.a
                             href={link.href}
                             onClick={(e) => {
                               e.preventDefault();
                               scrollToSection(link.href.substring(1));
                             }}
                             className="text-slate-300 hover:text-white transition-colors duration-200 flex items-center gap-2 group"
-                            style={{ animationDelay: `${index * 0.1}s` }}
+                            whileHover={{ x: 5 }}
+                            initial={{ opacity: 0, x: -10 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: index * 0.1 }}
                         >
                           <span className="w-1 h-1 bg-slate-500 rounded-full group-hover:bg-white transition-colors duration-200"></span>
                           {link.label}
-                        </a>
+                        </motion.a>
                       </li>
                   ))}
                 </ul>
@@ -198,7 +222,7 @@ export default function Footer() {
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
             {/* Bottom section */}
             <div className="border-t border-slate-700 pt-8">

@@ -8,6 +8,8 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 import { Loader2, Mail, Send } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { AnimatedSection } from '@/components/animations/MotionComponents';
 
 export default function Contact() {
   const { toast } = useToast();
@@ -76,117 +78,158 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="py-32 px-4 bg-gradient-to-b from-white to-slate-50">
+    <section id="contact" className="py-32 px-4 bg-gradient-to-b from-white to-slate-50 overflow-hidden">
       <div className="max-w-4xl mx-auto">
-        <div className="text-center space-y-6 mb-20">
-          <div className="inline-block px-4 py-2 bg-slate-100 rounded-full text-sm font-medium text-slate-700 mb-4">
+        <AnimatedSection className="text-center space-y-6 mb-20">
+          <motion.div
+            className="inline-block px-4 py-2 bg-slate-100 rounded-full text-sm font-medium text-slate-700 mb-4"
+            whileHover={{ scale: 1.05 }}
+          >
             Contact
-          </div>
+          </motion.div>
           <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-slate-900">
             Me Contacter
           </h2>
           <p className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
             Vous avez un projet en tête ? Discutons-en ensemble
           </p>
-        </div>
+        </AnimatedSection>
 
-        <Card className="border-slate-200 shadow-2xl bg-white">
-          <CardHeader className="text-center pb-8">
-            <div className="w-20 h-20 bg-gradient-to-br from-slate-900 to-slate-700 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-xl">
-              <Mail className="h-10 w-10 text-white" />
-            </div>
-            <CardTitle className="text-3xl font-bold">Envoyez-moi un message</CardTitle>
-            <CardDescription className="text-base mt-3">
-              Remplissez le formulaire ci-dessous et je vous répondrai dans les plus brefs délais
-            </CardDescription>
-          </CardHeader>
-
-          <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <label htmlFor="name" className="text-sm font-medium text-slate-700">
-                    Nom complet
-                  </label>
-                  <Input
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                    placeholder="Jean Dupont"
-                    className="border-slate-300"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <label htmlFor="email" className="text-sm font-medium text-slate-700">
-                    Email
-                  </label>
-                  <Input
-                    id="email"
-                    name="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                    placeholder="jean@example.com"
-                    className="border-slate-300"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <label htmlFor="subject" className="text-sm font-medium text-slate-700">
-                  Sujet
-                </label>
-                <Input
-                  id="subject"
-                  name="subject"
-                  value={formData.subject}
-                  onChange={handleChange}
-                  required
-                  placeholder="À propos de..."
-                  className="border-slate-300"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <label htmlFor="message" className="text-sm font-medium text-slate-700">
-                  Message
-                </label>
-                <Textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  required
-                  placeholder="Votre message..."
-                  rows={6}
-                  className="border-slate-300 resize-none"
-                />
-              </div>
-
-              <Button
-                type="submit"
-                disabled={loading}
-                className="w-full bg-slate-900 hover:bg-slate-800 text-white h-14 text-base font-medium shadow-lg hover:shadow-xl transition-all duration-300"
+        <motion.div
+          initial={{ opacity: 0, y: 60, scale: 0.95 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <Card className="border-slate-200 shadow-2xl bg-white">
+            <CardHeader className="text-center pb-8">
+              <motion.div
+                className="w-20 h-20 bg-gradient-to-br from-slate-900 to-slate-700 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-xl"
+                whileHover={{ rotate: 360, scale: 1.1 }}
+                transition={{ duration: 0.6 }}
               >
-                {loading ? (
-                  <>
-                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                    Envoi en cours...
-                  </>
-                ) : (
-                  <>
-                    <Send className="mr-2 h-5 w-5" />
-                    Envoyer le message
-                  </>
-                )}
-              </Button>
-            </form>
-          </CardContent>
-        </Card>
+                <Mail className="h-10 w-10 text-white" />
+              </motion.div>
+              <CardTitle className="text-3xl font-bold">Envoyez-moi un message</CardTitle>
+              <CardDescription className="text-base mt-3">
+                Remplissez le formulaire ci-dessous et je vous répondrai dans les plus brefs délais
+              </CardDescription>
+            </CardHeader>
+
+            <CardContent>
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <motion.div
+                  className="grid grid-cols-1 md:grid-cols-2 gap-6"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.2 }}
+                >
+                  <div className="space-y-2">
+                    <label htmlFor="name" className="text-sm font-medium text-slate-700">
+                      Nom complet
+                    </label>
+                    <Input
+                      id="name"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
+                      placeholder="Jean Dupont"
+                      className="border-slate-300 focus:ring-2 focus:ring-slate-400 transition-all duration-300"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label htmlFor="email" className="text-sm font-medium text-slate-700">
+                      Email
+                    </label>
+                    <Input
+                      id="email"
+                      name="email"
+                      type="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                      placeholder="jean@example.com"
+                      className="border-slate-300 focus:ring-2 focus:ring-slate-400 transition-all duration-300"
+                    />
+                  </div>
+                </motion.div>
+
+                <motion.div
+                  className="space-y-2"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.3 }}
+                >
+                  <label htmlFor="subject" className="text-sm font-medium text-slate-700">
+                    Sujet
+                  </label>
+                  <Input
+                    id="subject"
+                    name="subject"
+                    value={formData.subject}
+                    onChange={handleChange}
+                    required
+                    placeholder="À propos de..."
+                    className="border-slate-300 focus:ring-2 focus:ring-slate-400 transition-all duration-300"
+                  />
+                </motion.div>
+
+                <motion.div
+                  className="space-y-2"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.4 }}
+                >
+                  <label htmlFor="message" className="text-sm font-medium text-slate-700">
+                    Message
+                  </label>
+                  <Textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    required
+                    placeholder="Votre message..."
+                    rows={6}
+                    className="border-slate-300 resize-none focus:ring-2 focus:ring-slate-400 transition-all duration-300"
+                  />
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.5 }}
+                  whileHover={{ scale: 1.01 }}
+                  whileTap={{ scale: 0.99 }}
+                >
+                  <Button
+                    type="submit"
+                    disabled={loading}
+                    className="w-full bg-slate-900 hover:bg-slate-800 text-white h-14 text-base font-medium shadow-lg hover:shadow-xl transition-all duration-300"
+                  >
+                    {loading ? (
+                      <>
+                        <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                        Envoi en cours...
+                      </>
+                    ) : (
+                      <>
+                        <Send className="mr-2 h-5 w-5" />
+                        Envoyer le message
+                      </>
+                    )}
+                  </Button>
+                </motion.div>
+              </form>
+            </CardContent>
+          </Card>
+        </motion.div>
       </div>
     </section>
   );
