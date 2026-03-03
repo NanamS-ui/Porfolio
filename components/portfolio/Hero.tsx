@@ -1,13 +1,13 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { Github, Linkedin, Mail, Download } from 'lucide-react';
+import { Github, Linkedin, Mail, Download, ChevronDown } from 'lucide-react';
 import { motion } from 'framer-motion';
 import dynamic from 'next/dynamic';
 
 const ParticleBackground = dynamic(() => import('@/components/three/ParticleBackground'), {
   ssr: false,
-  loading: () => <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-white to-slate-100 -z-10" />,
+  loading: () => <div className="absolute inset-0 bg-[#0a0a0f] -z-10" />,
 });
 
 const easeOut = [0.22, 1, 0.36, 1] as [number, number, number, number];
@@ -16,13 +16,13 @@ const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.15, delayChildren: 0.3 },
+    transition: { staggerChildren: 0.12, delayChildren: 0.3 },
   },
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: easeOut } },
+  hidden: { opacity: 0, y: 40 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: easeOut } },
 };
 
 const socialVariants = {
@@ -40,7 +40,10 @@ export default function Hero() {
 
   return (
       <section className="min-h-screen flex items-center justify-center relative px-4 py-20 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-white to-slate-100 -z-20" />
+        <div className="absolute inset-0 bg-[#0a0a0f] -z-20" />
+        {/* Ambient glow effects */}
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-violet-600/10 rounded-full blur-[120px] -z-10" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-600/10 rounded-full blur-[120px] -z-10" />
         <ParticleBackground />
 
         <motion.div
@@ -55,11 +58,11 @@ export default function Hero() {
               whileHover={{ scale: 1.05 }}
               transition={{ type: 'spring', stiffness: 300, damping: 20 }}
             >
-              <div className="absolute -inset-1 bg-gradient-to-r from-slate-600 to-slate-400 rounded-full blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
+              <div className="absolute -inset-1.5 bg-gradient-to-r from-violet-500 via-purple-500 to-cyan-500 rounded-full blur opacity-40 group-hover:opacity-70 transition duration-1000 animate-pulse-glow"></div>
               <motion.img
                   src={publicUrl}
                   alt="Profile"
-                  className="relative w-40 h-40 md:w-48 md:h-48 rounded-full object-cover border-4 border-white shadow-2xl ring-2 ring-slate-200"
+                  className="relative w-40 h-40 md:w-48 md:h-48 rounded-full object-cover border-2 border-white/20 shadow-2xl ring-2 ring-violet-500/30"
                   initial={{ scale: 0, rotate: -180 }}
                   animate={{ scale: 1, rotate: 0 }}
                   transition={{ type: 'spring', stiffness: 150, damping: 20, delay: 0.2 }}
@@ -68,9 +71,9 @@ export default function Hero() {
           </motion.div>
 
           <motion.div className="space-y-6" variants={itemVariants}>
-            <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-3 text-center">
+            <h1 className="text-3xl md:text-4xl font-bold mb-3 text-center">
               <motion.span
-                className="block bg-gradient-to-r from-slate-900 via-slate-700 to-slate-900 bg-clip-text text-transparent"
+                className="block gradient-text-subtle"
                 initial={{ opacity: 0, x: -30 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, delay: 0.5 }}
@@ -78,7 +81,7 @@ export default function Hero() {
                 Toky Ralison
               </motion.span>
               <motion.span
-                className="block bg-gradient-to-r from-slate-900 via-slate-700 to-slate-900 bg-clip-text text-transparent"
+                className="block gradient-text-subtle"
                 initial={{ opacity: 0, x: 30 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, delay: 0.65 }}
@@ -93,13 +96,13 @@ export default function Hero() {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.8, ease: [0.22, 1, 0.36, 1] }}
             >
-              <span className="bg-gradient-to-r from-slate-900 via-slate-700 to-slate-900 bg-clip-text text-transparent">
+              <span className="gradient-text">
                 Développeur Full Stack
               </span>
             </motion.h2>
 
             <motion.div
-              className="flex items-center justify-center gap-2 text-slate-700"
+              className="flex items-center justify-center gap-2 text-slate-400"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1 }}
@@ -114,7 +117,7 @@ export default function Hero() {
             </motion.div>
 
             <motion.p
-              className="text-xl md:text-2xl text-slate-600 max-w-3xl mx-auto leading-relaxed"
+              className="text-lg md:text-xl text-slate-400 max-w-3xl mx-auto leading-relaxed"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 1.1 }}
@@ -131,7 +134,7 @@ export default function Hero() {
               <Button
                   size="lg"
                   onClick={() => scrollToSection('contact')}
-                  className="bg-slate-900 hover:bg-slate-800 text-white shadow-lg hover:shadow-xl transition-all duration-300"
+                  className="bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white shadow-lg shadow-violet-500/25 hover:shadow-violet-500/40 transition-all duration-300 border-0"
               >
                 <Mail className="mr-2 h-5 w-5" />
                 Me Contacter
@@ -143,7 +146,7 @@ export default function Hero() {
                   asChild
                   size="lg"
                   variant="outline"
-                  className="border-slate-300 hover:border-slate-400 hover:bg-slate-50 transition-all duration-300"
+                  className="border-white/15 bg-white/5 hover:bg-white/10 text-white backdrop-blur-sm transition-all duration-300"
               >
                 <a href="https://nrqjrzgmifkjamiikcxd.supabase.co/storage/v1/object/public/CV_portfolio/CV_Toky.pdf" download>
                   <Download className="mr-2 h-5 w-5" />
@@ -161,18 +164,18 @@ export default function Hero() {
               { href: "https://github.com/NanamS-ui", icon: Github, label: "GitHub" },
               { href: "http://linkedin.com/in/toky-ralison-1bb162340", icon: Linkedin, label: "LinkedIn" },
               { href: "mailto:rahajamananatoky@gmail.com", icon: Mail, label: "Email" },
-            ].map((social, index) => (
+            ].map((social) => (
               <motion.a
                   key={social.label}
                   href={social.href}
                   target={social.href.startsWith('mailto:') ? '_self' : '_blank'}
                   rel="noopener noreferrer"
-                  className="p-3 rounded-full bg-white/80 backdrop-blur-sm border border-slate-200 hover:border-slate-400 hover:shadow-lg transition-all duration-300"
+                  className="p-3 rounded-xl glass hover:border-violet-500/30 hover:shadow-lg hover:shadow-violet-500/10 transition-all duration-300"
                   variants={socialVariants}
-                  whileHover={{ scale: 1.2, y: -5, boxShadow: '0 10px 30px rgba(0,0,0,0.12)' }}
+                  whileHover={{ scale: 1.15, y: -3 }}
                   whileTap={{ scale: 0.9 }}
               >
-                <social.icon className="h-6 w-6 text-slate-700" />
+                <social.icon className="h-6 w-6 text-slate-300" />
               </motion.a>
             ))}
           </motion.div>
@@ -184,17 +187,15 @@ export default function Hero() {
             animate={{ opacity: 1 }}
             transition={{ delay: 1.5 }}
           >
-            <motion.div
-              className="w-6 h-10 border-2 border-slate-300 rounded-full flex justify-center"
-              animate={{ y: [0, 5, 0] }}
+            <motion.button
+              onClick={() => scrollToSection('projects')}
+              className="flex flex-col items-center gap-2 text-slate-500 hover:text-violet-400 transition-colors"
+              animate={{ y: [0, 8, 0] }}
               transition={{ duration: 2, repeat: Infinity }}
             >
-              <motion.div
-                className="w-1.5 h-3 bg-slate-400 rounded-full mt-2"
-                animate={{ opacity: [1, 0.3, 1], y: [0, 8, 0] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              />
-            </motion.div>
+              <span className="text-xs font-medium tracking-wider uppercase">Découvrir</span>
+              <ChevronDown className="h-5 w-5" />
+            </motion.button>
           </motion.div>
 
         </motion.div>

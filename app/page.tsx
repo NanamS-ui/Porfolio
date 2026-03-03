@@ -5,11 +5,13 @@ import ExperienceSection from '@/components/portfolio/Experience';
 import Formation from '@/components/portfolio/Formation';
 import Contact from '@/components/portfolio/Contact';
 import Footer from '@/components/portfolio/Footer';
+import Navbar from '@/components/portfolio/Navbar';
 import { Toaster } from '@/components/ui/toaster';
 
 export default function Home() {
     return (
-        <main className="min-h-screen overflow-x-hidden">
+        <main className="min-h-screen overflow-x-hidden bg-[#0a0a0f]">
+            <Navbar />
             <Hero />
             <Projects />
             <Skills />

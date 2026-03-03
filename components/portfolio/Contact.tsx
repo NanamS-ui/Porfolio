@@ -78,19 +78,19 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="py-32 px-4 bg-gradient-to-b from-white to-slate-50 overflow-hidden">
+    <section id="contact" className="py-32 px-4 section-dark-alt overflow-hidden">
       <div className="max-w-4xl mx-auto">
         <AnimatedSection className="text-center space-y-6 mb-20">
           <motion.div
-            className="inline-block px-4 py-2 bg-slate-100 rounded-full text-sm font-medium text-slate-700 mb-4"
+            className="inline-block px-4 py-2 glass rounded-full text-sm font-medium text-violet-300 mb-4"
             whileHover={{ scale: 1.05 }}
           >
             Contact
           </motion.div>
-          <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-slate-900">
+          <h2 className="text-4xl md:text-6xl font-bold tracking-tight gradient-text">
             Me Contacter
           </h2>
-          <p className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed">
             Vous avez un projet en tête ? Discutons-en ensemble
           </p>
         </AnimatedSection>
@@ -101,17 +101,17 @@ export default function Contact() {
           viewport={{ once: true, margin: '-80px' }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         >
-          <Card className="border-slate-200 shadow-2xl bg-white">
+          <Card className="glass-strong glow-violet bg-transparent">
             <CardHeader className="text-center pb-8">
               <motion.div
-                className="w-20 h-20 bg-gradient-to-br from-slate-900 to-slate-700 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-xl"
+                className="w-20 h-20 bg-gradient-to-br from-violet-600 to-cyan-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-xl shadow-violet-500/20"
                 whileHover={{ rotate: 360, scale: 1.1 }}
                 transition={{ duration: 0.6 }}
               >
                 <Mail className="h-10 w-10 text-white" />
               </motion.div>
-              <CardTitle className="text-3xl font-bold">Envoyez-moi un message</CardTitle>
-              <CardDescription className="text-base mt-3">
+              <CardTitle className="text-3xl font-bold text-white">Envoyez-moi un message</CardTitle>
+              <CardDescription className="text-base mt-3 text-slate-400">
                 Remplissez le formulaire ci-dessous et je vous répondrai dans les plus brefs délais
               </CardDescription>
             </CardHeader>
@@ -126,7 +126,7 @@ export default function Contact() {
                   transition={{ delay: 0.2 }}
                 >
                   <div className="space-y-2">
-                    <label htmlFor="name" className="text-sm font-medium text-slate-700">
+                    <label htmlFor="name" className="text-sm font-medium text-slate-300">
                       Nom complet
                     </label>
                     <Input
@@ -136,12 +136,12 @@ export default function Contact() {
                       onChange={handleChange}
                       required
                       placeholder="Jean Dupont"
-                      className="border-slate-300 focus:ring-2 focus:ring-slate-400 transition-all duration-300"
+                      className="bg-white/5 border-white/10 text-white placeholder:text-slate-500 focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/50 transition-all duration-300"
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <label htmlFor="email" className="text-sm font-medium text-slate-700">
+                    <label htmlFor="email" className="text-sm font-medium text-slate-300">
                       Email
                     </label>
                     <Input
@@ -152,7 +152,7 @@ export default function Contact() {
                       onChange={handleChange}
                       required
                       placeholder="jean@example.com"
-                      className="border-slate-300 focus:ring-2 focus:ring-slate-400 transition-all duration-300"
+                      className="bg-white/5 border-white/10 text-white placeholder:text-slate-500 focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/50 transition-all duration-300"
                     />
                   </div>
                 </motion.div>
@@ -164,7 +164,7 @@ export default function Contact() {
                   viewport={{ once: true }}
                   transition={{ delay: 0.3 }}
                 >
-                  <label htmlFor="subject" className="text-sm font-medium text-slate-700">
+                  <label htmlFor="subject" className="text-sm font-medium text-slate-300">
                     Sujet
                   </label>
                   <Input
@@ -174,7 +174,7 @@ export default function Contact() {
                     onChange={handleChange}
                     required
                     placeholder="À propos de..."
-                    className="border-slate-300 focus:ring-2 focus:ring-slate-400 transition-all duration-300"
+                    className="bg-white/5 border-white/10 text-white placeholder:text-slate-500 focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/50 transition-all duration-300"
                   />
                 </motion.div>
 
@@ -185,7 +185,7 @@ export default function Contact() {
                   viewport={{ once: true }}
                   transition={{ delay: 0.4 }}
                 >
-                  <label htmlFor="message" className="text-sm font-medium text-slate-700">
+                  <label htmlFor="message" className="text-sm font-medium text-slate-300">
                     Message
                   </label>
                   <Textarea
@@ -196,7 +196,7 @@ export default function Contact() {
                     required
                     placeholder="Votre message..."
                     rows={6}
-                    className="border-slate-300 resize-none focus:ring-2 focus:ring-slate-400 transition-all duration-300"
+                    className="bg-white/5 border-white/10 text-white placeholder:text-slate-500 resize-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/50 transition-all duration-300"
                   />
                 </motion.div>
 
@@ -211,7 +211,7 @@ export default function Contact() {
                   <Button
                     type="submit"
                     disabled={loading}
-                    className="w-full bg-slate-900 hover:bg-slate-800 text-white h-14 text-base font-medium shadow-lg hover:shadow-xl transition-all duration-300"
+                    className="w-full bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white h-14 text-base font-medium shadow-lg shadow-violet-500/25 hover:shadow-violet-500/40 transition-all duration-300 border-0"
                   >
                     {loading ? (
                       <>

@@ -61,7 +61,7 @@ export default function Footer() {
           {showScrollTop && (
             <motion.button
                 onClick={scrollToTop}
-                className="fixed bottom-8 right-8 z-50 p-3 bg-gradient-to-r from-slate-900 to-slate-800 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
+                className="fixed bottom-8 right-8 z-50 p-3 bg-gradient-to-r from-violet-600 to-purple-600 text-white rounded-full shadow-lg shadow-violet-500/25 hover:shadow-violet-500/40 transition-all duration-300"
                 initial={{ opacity: 0, scale: 0, y: 20 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0, y: 20 }}
@@ -74,12 +74,12 @@ export default function Footer() {
           )}
         </AnimatePresence>
 
-        <footer className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white py-16 px-4 relative overflow-hidden">
+        <footer className="bg-[#060609] text-white py-16 px-4 relative overflow-hidden">
           {/* Background decorations */}
           <div className="absolute inset-0 -z-10">
-            <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-slate-900/50 to-slate-800/50"></div>
-            <div className="absolute top-20 right-20 w-72 h-72 bg-blue-500/10 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-float" />
-            <div className="absolute bottom-20 left-20 w-72 h-72 bg-purple-500/10 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-float" style={{ animationDelay: '3s' }} />
+            <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-violet-500/50 to-transparent"></div>
+            <div className="absolute top-20 right-20 w-72 h-72 bg-violet-500/5 rounded-full mix-blend-screen filter blur-3xl opacity-30 animate-float" />
+            <div className="absolute bottom-20 left-20 w-72 h-72 bg-cyan-500/5 rounded-full mix-blend-screen filter blur-3xl opacity-30 animate-float" style={{ animationDelay: '3s' }} />
           </div>
 
           <div className="max-w-7xl mx-auto relative">
@@ -94,10 +94,10 @@ export default function Footer() {
               <div className="lg:col-span-2 space-y-6">
                 <div className="space-y-4">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-500 rounded-xl flex items-center justify-center">
+                    <div className="w-10 h-10 bg-gradient-to-br from-violet-500 to-cyan-500 rounded-xl flex items-center justify-center">
                       <Code className="h-6 w-6 text-white" />
                     </div>
-                    <h3 className="text-2xl font-bold bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent">
+                    <h3 className="text-2xl font-bold gradient-text">
                       Toky Ralison
                     </h3>
                   </div>
@@ -117,7 +117,7 @@ export default function Footer() {
                             href={social.href}
                             target={social.href.startsWith('mailto:') ? '_self' : '_blank'}
                             rel="noopener noreferrer"
-                            className={`group p-3 rounded-xl bg-slate-800/50 backdrop-blur-sm border border-slate-700 hover:border-slate-600 transition-all duration-300 ${social.color}`}
+                            className={`group p-3 rounded-xl glass hover:border-violet-500/30 transition-all duration-300 ${social.color}`}
                             whileHover={{ scale: 1.15, y: -3 }}
                             whileTap={{ scale: 0.9 }}
                             initial={{ opacity: 0, y: 20 }}
@@ -225,7 +225,7 @@ export default function Footer() {
             </motion.div>
 
             {/* Bottom section */}
-            <div className="border-t border-slate-700 pt-8">
+            <div className="border-t border-white/10 pt-8">
               <div className="flex flex-col md:flex-row justify-between items-center gap-4">
                 <div className="flex items-center gap-2 text-slate-400">
                   <span>© {currentYear} Toky Ralison. Tous droits réservés.</span>
