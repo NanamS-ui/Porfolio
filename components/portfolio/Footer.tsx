@@ -61,7 +61,7 @@ export default function Footer() {
           {showScrollTop && (
             <motion.button
                 onClick={scrollToTop}
-                className="fixed bottom-8 right-8 z-50 p-3 bg-gradient-to-r from-violet-600 to-purple-600 text-white rounded-full shadow-lg shadow-violet-500/25 hover:shadow-violet-500/40 transition-all duration-300"
+              className="fixed bottom-8 right-8 z-50 p-3 bg-gradient-to-r from-sky-600 to-cyan-500 text-white rounded-full shadow-lg shadow-sky-500/25 hover:shadow-sky-500/40 transition-all duration-300"
                 initial={{ opacity: 0, scale: 0, y: 20 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0, y: 20 }}
@@ -74,12 +74,12 @@ export default function Footer() {
           )}
         </AnimatePresence>
 
-        <footer className="bg-[#060609] text-white py-16 px-4 relative overflow-hidden">
+        <footer className="bg-[#040d17] text-white py-16 px-4 relative overflow-hidden section-grid">
           {/* Background decorations */}
           <div className="absolute inset-0 -z-10">
-            <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-violet-500/50 to-transparent"></div>
-            <div className="absolute top-20 right-20 w-72 h-72 bg-violet-500/5 rounded-full mix-blend-screen filter blur-3xl opacity-30 animate-float" />
-            <div className="absolute bottom-20 left-20 w-72 h-72 bg-cyan-500/5 rounded-full mix-blend-screen filter blur-3xl opacity-30 animate-float" style={{ animationDelay: '3s' }} />
+            <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-sky-400/50 to-transparent"></div>
+            <div className="absolute top-20 right-20 w-72 h-72 bg-sky-500/10 rounded-full mix-blend-screen filter blur-3xl opacity-40 animate-float" />
+            <div className="absolute bottom-20 left-20 w-72 h-72 bg-amber-400/10 rounded-full mix-blend-screen filter blur-3xl opacity-40 animate-float [animation-delay:3s]" />
           </div>
 
           <div className="max-w-7xl mx-auto relative">
@@ -94,7 +94,7 @@ export default function Footer() {
               <div className="lg:col-span-2 space-y-6">
                 <div className="space-y-4">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-gradient-to-br from-violet-500 to-cyan-500 rounded-xl flex items-center justify-center">
+                    <div className="w-10 h-10 bg-gradient-to-br from-sky-500 to-amber-400 rounded-xl flex items-center justify-center">
                       <Code className="h-6 w-6 text-white" />
                     </div>
                     <h3 className="text-2xl font-bold gradient-text">
@@ -117,7 +117,7 @@ export default function Footer() {
                             href={social.href}
                             target={social.href.startsWith('mailto:') ? '_self' : '_blank'}
                             rel="noopener noreferrer"
-                            className={`group p-3 rounded-xl glass hover:border-violet-500/30 transition-all duration-300 ${social.color}`}
+                            className={`group p-3 rounded-xl glass hover:border-sky-400/40 transition-all duration-300 ${social.color}`}
                             whileHover={{ scale: 1.15, y: -3 }}
                             whileTap={{ scale: 0.9 }}
                             initial={{ opacity: 0, y: 20 }}
@@ -227,7 +227,7 @@ export default function Footer() {
             {/* Bottom section */}
             <div className="border-t border-white/10 pt-8">
               <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-                <div className="flex items-center gap-2 text-slate-400">
+                  <div className="flex items-center gap-2 text-slate-300">
                   <span>© {currentYear} Toky Ralison. Tous droits réservés.</span>
                   <Heart className="h-4 w-4 text-red-500 animate-pulse" />
                 </div>
@@ -235,9 +235,9 @@ export default function Footer() {
                 <div className="flex items-center gap-6 text-sm text-slate-400">
                   <span>Fait avec</span>
                   <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
-                    <div className="w-2 h-2 bg-purple-500 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
-                    <div className="w-2 h-2 bg-pink-500 rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
+                    <div className="w-2 h-2 bg-sky-500 rounded-full animate-pulse"></div>
+                    <div className="w-2 h-2 bg-teal-400 rounded-full animate-pulse [animation-delay:0.2s]"></div>
+                    <div className="w-2 h-2 bg-amber-400 rounded-full animate-pulse [animation-delay:0.4s]"></div>
                   </div>
                   <span>Next.js & Tailwind CSS</span>
                 </div>

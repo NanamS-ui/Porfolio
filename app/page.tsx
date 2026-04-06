@@ -10,7 +10,7 @@ import { Toaster } from '@/components/ui/toaster';
 
 export default function Home() {
     return (
-        <main className="min-h-screen overflow-x-hidden bg-[#0a0a0f]">
+        <main className="min-h-screen overflow-x-hidden section-grid">
             <Navbar />
             <Hero />
             <Projects />

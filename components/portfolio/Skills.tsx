@@ -30,7 +30,7 @@ function AnimatedProgressBar({ value, delay = 0 }: { value: number; delay?: numb
   return (
     <div ref={ref} className="w-full bg-white/5 rounded-full h-2 overflow-hidden">
       <motion.div
-        className="h-full bg-gradient-to-r from-violet-500 to-cyan-500 rounded-full"
+        className="h-full bg-gradient-to-r from-sky-500 via-teal-400 to-amber-400 rounded-full"
         initial={{ width: 0 }}
         animate={{ width: `${width}%` }}
         transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
@@ -88,11 +88,11 @@ export default function Skills() {
   };
 
   return (
-    <section id="skills" className="py-32 px-4 section-dark overflow-hidden">
+    <section id="skills" className="py-32 px-4 section-dark section-grid overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <AnimatedSection className="text-center space-y-6 mb-20">
           <motion.div
-            className="inline-block px-4 py-2 glass rounded-full text-sm font-medium text-cyan-300 mb-4"
+            className="inline-block px-4 py-2 glass rounded-full text-sm font-medium text-amber-200 mb-4"
             whileHover={{ scale: 1.05 }}
           >
             Expertise
@@ -100,7 +100,7 @@ export default function Skills() {
           <h2 className="text-4xl md:text-6xl font-bold tracking-tight gradient-text">
             Compétences
           </h2>
-          <p className="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed">
             Technologies et outils que je maîtrise pour créer des applications performantes et innovantes
           </p>
         </AnimatedSection>
@@ -111,7 +111,7 @@ export default function Skills() {
               animate={{ rotate: 360 }}
               transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
             >
-              <Loader2 className="h-10 w-10 text-violet-400" />
+              <Loader2 className="h-10 w-10 text-sky-400" />
             </motion.div>
           </div>
         ) : (
@@ -122,11 +122,11 @@ export default function Skills() {
                   whileHover={{ y: -4 }}
                   transition={{ type: 'spring', stiffness: 300, damping: 25 }}
                 >
-                  <Card className="glass hover:border-violet-500/30 hover:shadow-2xl hover:shadow-violet-500/10 transition-all duration-500 h-full bg-transparent">
+                  <Card className="glass-surface hover:border-sky-400/45 hover:shadow-2xl hover:shadow-sky-500/15 transition-all duration-500 h-full bg-transparent">
                     <CardHeader className="pb-6">
                       <CardTitle className="text-2xl font-bold text-white flex items-center gap-3">
                         <motion.div
-                          className="w-10 h-10 bg-gradient-to-br from-violet-600 to-cyan-600 rounded-lg flex items-center justify-center text-lg shadow-lg shadow-violet-500/20"
+                          className="w-10 h-10 bg-gradient-to-br from-sky-500 to-amber-400 rounded-lg flex items-center justify-center text-lg shadow-lg shadow-sky-500/20"
                           whileHover={{ rotate: 360, scale: 1.1 }}
                           transition={{ duration: 0.5 }}
                         >
@@ -147,7 +147,7 @@ export default function Skills() {
                         >
                           <div className="flex justify-between items-center">
                             <span className="font-medium text-slate-300">{skill.name}</span>
-                            <Badge variant="secondary" className="text-xs bg-white/5 text-violet-300 border border-white/10">
+                            <Badge variant="secondary" className="text-xs bg-white/5 text-sky-200 border border-sky-200/20">
                               {skill.proficiency}%
                             </Badge>
                           </div>

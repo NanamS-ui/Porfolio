@@ -29,6 +29,16 @@ export const scaleIn: Variants = {
   visible: { opacity: 1, scale: 1 },
 };
 
+export const blurInUp: Variants = {
+  hidden: { opacity: 0, y: 28, filter: 'blur(10px)' },
+  visible: { opacity: 1, y: 0, filter: 'blur(0px)' },
+};
+
+export const rotateInSoft: Variants = {
+  hidden: { opacity: 0, rotate: -4, scale: 0.96 },
+  visible: { opacity: 1, rotate: 0, scale: 1 },
+};
+
 export const staggerContainer: Variants = {
   hidden: { opacity: 0 },
   visible: {
@@ -47,6 +57,17 @@ export const staggerContainerSlow: Variants = {
     transition: {
       staggerChildren: 0.15,
       delayChildren: 0.2,
+    },
+  },
+};
+
+export const cascadeContainer: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.08,
+      delayChildren: 0.18,
     },
   },
 };

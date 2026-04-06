@@ -78,11 +78,11 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="py-32 px-4 section-dark-alt overflow-hidden">
+    <section id="contact" className="py-32 px-4 section-dark-alt section-grid overflow-hidden">
       <div className="max-w-4xl mx-auto">
         <AnimatedSection className="text-center space-y-6 mb-20">
           <motion.div
-            className="inline-block px-4 py-2 glass rounded-full text-sm font-medium text-violet-300 mb-4"
+            className="inline-block px-4 py-2 glass rounded-full text-sm font-medium text-sky-300 mb-4"
             whileHover={{ scale: 1.05 }}
           >
             Contact
@@ -90,7 +90,7 @@ export default function Contact() {
           <h2 className="text-4xl md:text-6xl font-bold tracking-tight gradient-text">
             Me Contacter
           </h2>
-          <p className="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed">
             Vous avez un projet en tête ? Discutons-en ensemble
           </p>
         </AnimatedSection>
@@ -101,17 +101,17 @@ export default function Contact() {
           viewport={{ once: true, margin: '-80px' }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         >
-          <Card className="glass-strong glow-violet bg-transparent">
+          <Card className="glass-strong glow-primary bg-transparent">
             <CardHeader className="text-center pb-8">
               <motion.div
-                className="w-20 h-20 bg-gradient-to-br from-violet-600 to-cyan-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-xl shadow-violet-500/20"
+                className="w-20 h-20 bg-gradient-to-br from-sky-600 to-amber-400 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-xl shadow-sky-500/20"
                 whileHover={{ rotate: 360, scale: 1.1 }}
                 transition={{ duration: 0.6 }}
               >
                 <Mail className="h-10 w-10 text-white" />
               </motion.div>
               <CardTitle className="text-3xl font-bold text-white">Envoyez-moi un message</CardTitle>
-              <CardDescription className="text-base mt-3 text-slate-400">
+              <CardDescription className="text-base mt-3 text-slate-300">
                 Remplissez le formulaire ci-dessous et je vous répondrai dans les plus brefs délais
               </CardDescription>
             </CardHeader>
@@ -136,7 +136,7 @@ export default function Contact() {
                       onChange={handleChange}
                       required
                       placeholder="Jean Dupont"
-                      className="bg-white/5 border-white/10 text-white placeholder:text-slate-500 focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/50 transition-all duration-300"
+                      className="bg-white/5 border-sky-200/20 text-white placeholder:text-slate-500 focus:ring-2 focus:ring-sky-500/50 focus:border-sky-500/50 transition-all duration-300"
                     />
                   </div>
 
@@ -152,7 +152,7 @@ export default function Contact() {
                       onChange={handleChange}
                       required
                       placeholder="jean@example.com"
-                      className="bg-white/5 border-white/10 text-white placeholder:text-slate-500 focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/50 transition-all duration-300"
+                      className="bg-white/5 border-sky-200/20 text-white placeholder:text-slate-500 focus:ring-2 focus:ring-sky-500/50 focus:border-sky-500/50 transition-all duration-300"
                     />
                   </div>
                 </motion.div>
@@ -174,7 +174,7 @@ export default function Contact() {
                     onChange={handleChange}
                     required
                     placeholder="À propos de..."
-                    className="bg-white/5 border-white/10 text-white placeholder:text-slate-500 focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/50 transition-all duration-300"
+                    className="bg-white/5 border-sky-200/20 text-white placeholder:text-slate-500 focus:ring-2 focus:ring-sky-500/50 focus:border-sky-500/50 transition-all duration-300"
                   />
                 </motion.div>
 
@@ -196,7 +196,7 @@ export default function Contact() {
                     required
                     placeholder="Votre message..."
                     rows={6}
-                    className="bg-white/5 border-white/10 text-white placeholder:text-slate-500 resize-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/50 transition-all duration-300"
+                    className="bg-white/5 border-sky-200/20 text-white placeholder:text-slate-500 resize-none focus:ring-2 focus:ring-sky-500/50 focus:border-sky-500/50 transition-all duration-300"
                   />
                 </motion.div>
 
@@ -211,7 +211,7 @@ export default function Contact() {
                   <Button
                     type="submit"
                     disabled={loading}
-                    className="w-full bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white h-14 text-base font-medium shadow-lg shadow-violet-500/25 hover:shadow-violet-500/40 transition-all duration-300 border-0"
+                    className="w-full bg-gradient-to-r from-sky-600 to-cyan-500 hover:from-sky-500 hover:to-cyan-400 text-white h-14 text-base font-medium shadow-lg shadow-sky-500/25 hover:shadow-sky-500/40 transition-all duration-300 border-0"
                   >
                     {loading ? (
                       <>

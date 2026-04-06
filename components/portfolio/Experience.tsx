@@ -36,11 +36,11 @@ export default function ExperienceSection() {
   };
 
   return (
-    <section id="experience" className="py-32 px-4 section-dark-alt overflow-hidden">
+    <section id="experience" className="py-32 px-4 section-dark-alt section-grid overflow-hidden">
       <div className="max-w-5xl mx-auto">
         <AnimatedSection className="text-center space-y-6 mb-20">
           <motion.div
-            className="inline-block px-4 py-2 glass rounded-full text-sm font-medium text-purple-300 mb-4"
+            className="inline-block px-4 py-2 glass rounded-full text-sm font-medium text-amber-200 mb-4"
             whileHover={{ scale: 1.05 }}
           >
             Parcours
@@ -48,7 +48,7 @@ export default function ExperienceSection() {
           <h2 className="text-4xl md:text-6xl font-bold tracking-tight gradient-text">
             Expérience
           </h2>
-          <p className="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed">
             Mon parcours professionnel et les projets sur lesquels j'ai eu la chance de travailler
           </p>
         </AnimatedSection>
@@ -59,13 +59,13 @@ export default function ExperienceSection() {
               animate={{ rotate: 360 }}
               transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
             >
-              <Loader2 className="h-10 w-10 text-violet-400" />
+              <Loader2 className="h-10 w-10 text-sky-400" />
             </motion.div>
           </div>
         ) : (
           <div className="relative">
             <motion.div
-              className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-violet-500 via-purple-500 to-cyan-500 hidden md:block rounded-full"
+              className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-sky-500 via-teal-400 to-amber-400 hidden md:block rounded-full"
               initial={{ scaleY: 0, originY: 0 }}
               whileInView={{ scaleY: 1 }}
               viewport={{ once: true }}
@@ -87,7 +87,7 @@ export default function ExperienceSection() {
                   }}
                 >
                   <motion.div
-                    className="hidden md:block absolute left-8 top-8 w-4 h-4 bg-gradient-to-br from-violet-500 to-cyan-500 rounded-full -translate-x-[7px] ring-4 ring-[#0a0a0f] shadow-lg shadow-violet-500/30"
+                    className="hidden md:block absolute left-8 top-8 w-4 h-4 bg-gradient-to-br from-sky-500 to-amber-400 rounded-full -translate-x-[7px] ring-4 ring-[#06111d] shadow-lg shadow-sky-500/30"
                     initial={{ scale: 0 }}
                     whileInView={{ scale: 1 }}
                     viewport={{ once: true }}
@@ -98,14 +98,14 @@ export default function ExperienceSection() {
                     whileHover={{ y: -4 }}
                     transition={{ type: 'spring', stiffness: 300, damping: 25 }}
                   >
-                    <Card className="md:ml-24 glass hover:border-violet-500/30 hover:shadow-2xl hover:shadow-violet-500/10 transition-all duration-500 bg-transparent">
+                    <Card className="md:ml-24 glass-surface hover:border-sky-400/45 hover:shadow-2xl hover:shadow-sky-500/15 transition-all duration-500 bg-transparent">
                       <CardHeader>
                         <div className="flex flex-wrap gap-3 items-start justify-between mb-2">
                           <div className="space-y-1">
                             <CardTitle className="text-2xl text-white">
                               {exp.position}
                             </CardTitle>
-                            <CardDescription className="text-lg font-medium text-violet-300">
+                            <CardDescription className="text-lg font-medium text-sky-300">
                               {exp.company}
                             </CardDescription>
                           </div>
@@ -124,14 +124,14 @@ export default function ExperienceSection() {
 
                         <div className="flex flex-wrap gap-4 text-sm text-slate-400">
                           <div className="flex items-center gap-1">
-                            <Calendar className="h-4 w-4 text-violet-400" />
+                            <Calendar className="h-4 w-4 text-sky-400" />
                             <span>
                               {formatDate(exp.start_date)} - {exp.end_date ? formatDate(exp.end_date) : 'Présent'}
                             </span>
                           </div>
                           {exp.location && (
                             <div className="flex items-center gap-1">
-                              <MapPin className="h-4 w-4 text-cyan-400" />
+                              <MapPin className="h-4 w-4 text-amber-300" />
                               <span>{exp.location}</span>
                             </div>
                           )}
@@ -139,7 +139,7 @@ export default function ExperienceSection() {
                       </CardHeader>
 
                       <CardContent className="space-y-4">
-                        <p className="text-slate-400 leading-relaxed">
+                        <p className="text-slate-300 leading-relaxed">
                           {exp.description}
                         </p>
 
@@ -152,7 +152,7 @@ export default function ExperienceSection() {
                               viewport={{ once: true }}
                               transition={{ delay: i * 0.05 + 0.3 }}
                             >
-                              <Badge variant="secondary" className="text-xs bg-white/5 text-slate-300 border border-white/10">
+                              <Badge variant="secondary" className="text-xs bg-white/5 text-slate-200 border border-sky-200/20">
                                 {tech}
                               </Badge>
                             </motion.div>

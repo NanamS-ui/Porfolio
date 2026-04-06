@@ -55,11 +55,11 @@ export default function Projects() {
     : projects.filter(p => p.category === selectedCategory);
 
   return (
-    <section id="projects" className="py-32 px-4 section-dark-alt overflow-hidden">
+    <section id="projects" className="py-32 px-4 section-dark-alt section-grid overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <AnimatedSection className="text-center space-y-6 mb-20">
           <motion.div
-            className="inline-block px-4 py-2 glass rounded-full text-sm font-medium text-violet-300 mb-4"
+            className="inline-block px-4 py-2 glass rounded-full text-sm font-medium text-sky-300 mb-4"
             whileHover={{ scale: 1.05 }}
           >
             Portfolio
@@ -67,7 +67,7 @@ export default function Projects() {
           <h2 className="text-4xl md:text-6xl font-bold tracking-tight gradient-text">
             Mes Projets
           </h2>
-          <p className="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed">
             Une sélection de mes réalisations récentes démontrant mes compétences techniques et ma créativité
           </p>
         </AnimatedSection>
@@ -79,7 +79,7 @@ export default function Projects() {
                 <TabsTrigger
                   key={category}
                   value={category}
-                  className="capitalize px-6 py-2 text-slate-400 data-[state=active]:bg-violet-600 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-violet-500/25 border border-white/10 data-[state=active]:border-violet-500 rounded-xl transition-all duration-300"
+                  className="capitalize px-6 py-2 text-slate-300 data-[state=active]:bg-gradient-to-r data-[state=active]:from-sky-600 data-[state=active]:to-teal-500 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-sky-500/25 border border-white/10 data-[state=active]:border-sky-400 rounded-xl transition-all duration-300"
                 >
                   {category === 'all' ? 'Tous' : category}
                 </TabsTrigger>
@@ -94,7 +94,7 @@ export default function Projects() {
               animate={{ rotate: 360 }}
               transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
             >
-              <Loader2 className="h-10 w-10 text-violet-400" />
+              <Loader2 className="h-10 w-10 text-sky-400" />
             </motion.div>
           </div>
         ) : (
@@ -115,29 +115,29 @@ export default function Projects() {
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true, margin: '-50px' }}
-                  whileHover={{ y: -8 }}
+                  whileHover={{ y: -8, rotateX: 2, rotateY: -2 }}
                   transition={{ type: 'spring', stiffness: 300, damping: 25 }}
                 >
-                  <Card className="group glass hover:border-violet-500/30 hover:shadow-2xl hover:shadow-violet-500/10 transition-all duration-500 overflow-hidden h-full bg-transparent">
+                  <Card className="group glass-surface hover:border-sky-400/45 hover:shadow-2xl hover:shadow-sky-500/15 transition-all duration-500 overflow-hidden h-full bg-transparent">
                     <div className="relative overflow-hidden aspect-video">
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0f] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#06111d] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10" />
                       <img
                         src={project.image_url}
                         alt={project.title}
                         className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-700"
                       />
                       {project.featured && (
-                        <Badge className="absolute top-4 right-4 bg-gradient-to-r from-violet-600 to-purple-600 text-white border-0 shadow-lg z-20">
+                        <Badge className="absolute top-4 right-4 bg-gradient-to-r from-amber-500 to-orange-500 text-white border-0 shadow-lg z-20">
                           Featured
                         </Badge>
                       )}
                     </div>
 
                     <CardHeader>
-                      <CardTitle className="text-xl text-white group-hover:text-violet-300 transition-colors">
+                      <CardTitle className="text-xl text-white group-hover:text-sky-300 transition-colors">
                         {project.title}
                       </CardTitle>
-                      <CardDescription className="line-clamp-2 text-slate-400">
+                      <CardDescription className="line-clamp-2 text-slate-300/90">
                         {project.short_description}
                       </CardDescription>
                     </CardHeader>
@@ -145,12 +145,12 @@ export default function Projects() {
                     <CardContent>
                       <div className="flex flex-wrap gap-2">
                         {project.technologies.slice(0, 4).map((tech, i) => (
-                          <Badge key={i} variant="secondary" className="text-xs bg-white/5 text-slate-300 border border-white/10">
+                          <Badge key={i} variant="secondary" className="text-xs bg-white/5 text-slate-200 border border-sky-200/20">
                             {tech}
                           </Badge>
                         ))}
                         {project.technologies.length > 4 && (
-                          <Badge variant="secondary" className="text-xs bg-white/5 text-slate-300 border border-white/10">
+                          <Badge variant="secondary" className="text-xs bg-white/5 text-slate-200 border border-sky-200/20">
                             +{project.technologies.length - 4}
                           </Badge>
                         )}
@@ -162,7 +162,7 @@ export default function Projects() {
                         <Button
                           variant="default"
                           size="sm"
-                          className="flex-1 bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 border-0 shadow-lg shadow-violet-500/20"
+                          className="flex-1 bg-gradient-to-r from-sky-600 to-cyan-500 hover:from-sky-500 hover:to-cyan-400 border-0 shadow-lg shadow-sky-500/20"
                           asChild
                         >
                           <a href={project.demo_url} target="_blank" rel="noopener noreferrer">
@@ -175,7 +175,7 @@ export default function Projects() {
                         <Button
                           variant="outline"
                           size="sm"
-                          className="flex-1 border-white/15 bg-white/5 text-white hover:bg-white/10"
+                          className="flex-1 border-sky-200/20 bg-white/5 text-white hover:bg-white/10"
                           asChild
                         >
                           <a href={project.github_url} target="_blank" rel="noopener noreferrer">
