@@ -28,9 +28,9 @@ function AnimatedProgressBar({ value, delay = 0 }: { value: number; delay?: numb
   }, [value, delay]);
 
   return (
-    <div ref={ref} className="w-full bg-white/5 rounded-full h-2 overflow-hidden">
+    <div ref={ref} className="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
       <motion.div
-        className="h-full bg-gradient-to-r from-sky-500 via-teal-400 to-amber-400 rounded-full"
+        className="h-full bg-blue-600 rounded-full"
         initial={{ width: 0 }}
         animate={{ width: `${width}%` }}
         transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
@@ -88,19 +88,14 @@ export default function Skills() {
   };
 
   return (
-    <section id="skills" className="py-32 px-4 section-dark section-grid overflow-hidden">
+    <section id="skills" className="py-28 px-4 section-alt section-grid overflow-hidden">
       <div className="max-w-7xl mx-auto">
-        <AnimatedSection className="text-center space-y-6 mb-20">
-          <motion.div
-            className="inline-block px-4 py-2 glass rounded-full text-sm font-medium text-amber-200 mb-4"
-            whileHover={{ scale: 1.05 }}
-          >
-            Expertise
-          </motion.div>
-          <h2 className="text-4xl md:text-6xl font-bold tracking-tight gradient-text">
+        <AnimatedSection className="text-center space-y-5 mb-16">
+          <div className="eyebrow-badge mx-auto w-fit">Expertise</div>
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-slate-900">
             Compétences
           </h2>
-          <p className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
             Technologies et outils que je maîtrise pour créer des applications performantes et innovantes
           </p>
         </AnimatedSection>
@@ -111,27 +106,23 @@ export default function Skills() {
               animate={{ rotate: 360 }}
               transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
             >
-              <Loader2 className="h-10 w-10 text-sky-400" />
+              <Loader2 className="h-10 w-10 text-blue-600" />
             </motion.div>
           </div>
         ) : (
-          <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {Object.entries(groupedSkills).map(([category, categorySkills], catIndex) => (
               <StaggerItem key={category}>
                 <motion.div
-                  whileHover={{ y: -4 }}
+                  whileHover={{ y: -3 }}
                   transition={{ type: 'spring', stiffness: 300, damping: 25 }}
                 >
-                  <Card className="glass-surface hover:border-sky-400/45 hover:shadow-2xl hover:shadow-sky-500/15 transition-all duration-500 h-full bg-transparent">
+                  <Card className="surface-card transition-shadow duration-300 hover:shadow-lg h-full">
                     <CardHeader className="pb-6">
-                      <CardTitle className="text-2xl font-bold text-white flex items-center gap-3">
-                        <motion.div
-                          className="w-10 h-10 bg-gradient-to-br from-sky-500 to-amber-400 rounded-lg flex items-center justify-center text-lg shadow-lg shadow-sky-500/20"
-                          whileHover={{ rotate: 360, scale: 1.1 }}
-                          transition={{ duration: 0.5 }}
-                        >
+                      <CardTitle className="text-xl font-bold text-slate-900 flex items-center gap-3">
+                        <span className="icon-chip w-10 h-10 text-lg">
                           {categoryIcons[category] || (categoryNames[category] || category).charAt(0)}
-                        </motion.div>
+                        </span>
                         {categoryNames[category] || category}
                       </CardTitle>
                     </CardHeader>
@@ -146,8 +137,8 @@ export default function Skills() {
                           transition={{ delay: skillIndex * 0.05, duration: 0.4 }}
                         >
                           <div className="flex justify-between items-center">
-                            <span className="font-medium text-slate-300">{skill.name}</span>
-                            <Badge variant="secondary" className="text-xs bg-white/5 text-sky-200 border border-sky-200/20">
+                            <span className="font-medium text-slate-700">{skill.name}</span>
+                            <Badge variant="secondary" className="text-xs bg-slate-100 text-slate-600 border border-slate-200 font-normal">
                               {skill.proficiency}%
                             </Badge>
                           </div>

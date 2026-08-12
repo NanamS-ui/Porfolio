@@ -31,19 +31,16 @@ export default function Footer() {
       href: "https://github.com/NanamS-ui",
       icon: Github,
       label: "GitHub",
-      color: "hover:bg-slate-700 hover:text-white"
     },
     {
       href: "http://linkedin.com/in/toky-ralison-1bb162340",
       icon: Linkedin,
       label: "LinkedIn",
-      color: "hover:bg-blue-600 hover:text-white"
     },
     {
       href: "mailto:rahajamananatoky@gmail.com",
       icon: Mail,
       label: "Email",
-      color: "hover:bg-red-600 hover:text-white"
     }
   ];
 
@@ -61,11 +58,11 @@ export default function Footer() {
           {showScrollTop && (
             <motion.button
                 onClick={scrollToTop}
-              className="fixed bottom-8 right-8 z-50 p-3 bg-gradient-to-r from-sky-600 to-cyan-500 text-white rounded-full shadow-lg shadow-sky-500/25 hover:shadow-sky-500/40 transition-all duration-300"
+              className="fixed bottom-8 right-8 z-50 p-3 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg shadow-blue-600/25 transition-colors duration-300"
                 initial={{ opacity: 0, scale: 0, y: 20 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0, y: 20 }}
-                whileHover={{ scale: 1.15 }}
+                whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 transition={{ type: 'spring', stiffness: 300, damping: 20 }}
             >
@@ -74,14 +71,7 @@ export default function Footer() {
           )}
         </AnimatePresence>
 
-        <footer className="bg-[#040d17] text-white py-16 px-4 relative overflow-hidden section-grid">
-          {/* Background decorations */}
-          <div className="absolute inset-0 -z-10">
-            <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-sky-400/50 to-transparent"></div>
-            <div className="absolute top-20 right-20 w-72 h-72 bg-sky-500/10 rounded-full mix-blend-screen filter blur-3xl opacity-40 animate-float" />
-            <div className="absolute bottom-20 left-20 w-72 h-72 bg-amber-400/10 rounded-full mix-blend-screen filter blur-3xl opacity-40 animate-float [animation-delay:3s]" />
-          </div>
-
+        <footer className="bg-slate-900 text-white py-16 px-4 relative overflow-hidden">
           <div className="max-w-7xl mx-auto relative">
             <motion.div
               className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12"
@@ -94,31 +84,31 @@ export default function Footer() {
               <div className="lg:col-span-2 space-y-6">
                 <div className="space-y-4">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-gradient-to-br from-sky-500 to-amber-400 rounded-xl flex items-center justify-center">
+                    <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center">
                       <Code className="h-6 w-6 text-white" />
                     </div>
-                    <h3 className="text-2xl font-bold gradient-text">
+                    <h3 className="text-2xl font-bold text-white">
                       Toky Ralison
                     </h3>
                   </div>
-                  <p className="text-slate-300 leading-relaxed max-w-md">
-                    Développeur Full Stack passionné par la création d'expériences web exceptionnelles.
-                    Spécialisé dans les technologies modernes et l'innovation.
+                  <p className="text-slate-400 leading-relaxed max-w-md">
+                    Développeur Full Stack Junior passionné par la création d'expériences web exceptionnelles.
+                    Motivé pour apprendre, progresser et contribuer à des projets ambitieux.
                   </p>
                 </div>
 
                 {/* Social links */}
                 <div className="space-y-4">
                   <h4 className="text-lg font-semibold text-white">Me suivre</h4>
-                  <div className="flex gap-4">
+                  <div className="flex gap-3">
                     {socialLinks.map((social, index) => (
                         <motion.a
                             key={social.label}
                             href={social.href}
                             target={social.href.startsWith('mailto:') ? '_self' : '_blank'}
                             rel="noopener noreferrer"
-                            className={`group p-3 rounded-xl glass hover:border-sky-400/40 transition-all duration-300 ${social.color}`}
-                            whileHover={{ scale: 1.15, y: -3 }}
+                            className="group p-3 rounded-xl border border-white/10 bg-white/5 hover:bg-blue-600 hover:border-blue-600 transition-all duration-300"
+                            whileHover={{ scale: 1.1, y: -2 }}
                             whileTap={{ scale: 0.9 }}
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
@@ -145,14 +135,14 @@ export default function Footer() {
                               e.preventDefault();
                               scrollToSection(link.href.substring(1));
                             }}
-                            className="text-slate-300 hover:text-white transition-colors duration-200 flex items-center gap-2 group"
-                            whileHover={{ x: 5 }}
+                            className="text-slate-400 hover:text-white transition-colors duration-200 flex items-center gap-2 group"
+                            whileHover={{ x: 4 }}
                             initial={{ opacity: 0, x: -10 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: index * 0.1 }}
                         >
-                          <span className="w-1 h-1 bg-slate-500 rounded-full group-hover:bg-white transition-colors duration-200"></span>
+                          <span className="w-1 h-1 bg-slate-600 rounded-full group-hover:bg-blue-400 transition-colors duration-200"></span>
                           {link.label}
                         </motion.a>
                       </li>
@@ -164,20 +154,19 @@ export default function Footer() {
               <div className="space-y-6">
                 <h4 className="text-lg font-semibold text-white">Contact</h4>
                 <div className="space-y-3">
-                  <div className="flex items-center gap-3 text-slate-300">
+                  <div className="flex items-center gap-3 text-slate-400">
                     <Mail className="h-4 w-4 text-blue-400" />
                     <a href="mailto:rahajamananatoky@gmail.com" target="_blank"
                        rel="noopener noreferrer"
-                       className="text-sm hover:text-green-400 transition-colors duration-200">
+                       className="text-sm hover:text-white transition-colors duration-200">
                       rahajamananatoky@gmail.com
                     </a>
                   </div>
 
-
-                  <div className="flex items-center gap-3 text-slate-300">
+                  <div className="flex items-center gap-3 text-slate-400">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="h-4 w-4 text-green-500"
+                        className="h-4 w-4 text-emerald-500"
                         fill="currentColor"
                         viewBox="0 0 24 24"
                     >
@@ -187,16 +176,16 @@ export default function Footer() {
                         href="https://wa.me/261389364373"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-sm hover:text-green-400 transition-colors duration-200"
+                        className="text-sm hover:text-white transition-colors duration-200"
                     >
                       +261 38 93 643 73
                     </a>
                   </div>
 
-                  <div className="flex items-center gap-3 text-slate-300">
+                  <div className="flex items-center gap-3 text-slate-400">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="h-4 w-4 text-green-500"
+                        className="h-4 w-4 text-emerald-500"
                         fill="currentColor"
                         viewBox="0 0 24 24"
                     >
@@ -206,18 +195,20 @@ export default function Footer() {
                         href="https://wa.me/261377764796"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-sm hover:text-green-400 transition-colors duration-200"
+                        className="text-sm hover:text-white transition-colors duration-200"
                     >
                       +261 37 77 647 96
                     </a>
                   </div>
 
-                  <div className="flex items-center gap-3 text-slate-300">
-                    <div className="w-4 h-4 bg-gradient-to-br from-green-400 to-blue-400 rounded-full"></div>
+                  <div className="flex items-center gap-3 text-slate-400">
+                    <div className="w-4 h-4 rounded-full bg-blue-500/20 flex items-center justify-center">
+                      <div className="w-1.5 h-1.5 bg-blue-400 rounded-full"></div>
+                    </div>
                     <span className="text-sm">Antananarivo, Madagascar</span>
                   </div>
-                  <div className="flex items-center gap-3 text-slate-300">
-                    <Sparkles className="h-4 w-4 text-yellow-400" />
+                  <div className="flex items-center gap-3 text-slate-400">
+                    <Sparkles className="h-4 w-4 text-blue-400" />
                     <span className="text-sm">Disponible pour projets</span>
                   </div>
                 </div>
@@ -227,19 +218,13 @@ export default function Footer() {
             {/* Bottom section */}
             <div className="border-t border-white/10 pt-8">
               <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-                  <div className="flex items-center gap-2 text-slate-300">
+                  <div className="flex items-center gap-2 text-slate-400 text-sm">
                   <span>© {currentYear} Toky Ralison. Tous droits réservés.</span>
-                  <Heart className="h-4 w-4 text-red-500 animate-pulse" />
+                  <Heart className="h-4 w-4 text-red-500" />
                 </div>
 
-                <div className="flex items-center gap-6 text-sm text-slate-400">
-                  <span>Fait avec</span>
-                  <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-sky-500 rounded-full animate-pulse"></div>
-                    <div className="w-2 h-2 bg-teal-400 rounded-full animate-pulse [animation-delay:0.2s]"></div>
-                    <div className="w-2 h-2 bg-amber-400 rounded-full animate-pulse [animation-delay:0.4s]"></div>
-                  </div>
-                  <span>Next.js & Tailwind CSS</span>
+                <div className="flex items-center gap-2 text-sm text-slate-500">
+                  <span>Conçu et développé avec Next.js & Tailwind CSS</span>
                 </div>
               </div>
             </div>

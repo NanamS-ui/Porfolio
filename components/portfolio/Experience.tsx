@@ -36,19 +36,14 @@ export default function ExperienceSection() {
   };
 
   return (
-    <section id="experience" className="py-32 px-4 section-dark-alt section-grid overflow-hidden">
+    <section id="experience" className="py-28 px-4 section-grid overflow-hidden">
       <div className="max-w-5xl mx-auto">
-        <AnimatedSection className="text-center space-y-6 mb-20">
-          <motion.div
-            className="inline-block px-4 py-2 glass rounded-full text-sm font-medium text-amber-200 mb-4"
-            whileHover={{ scale: 1.05 }}
-          >
-            Parcours
-          </motion.div>
-          <h2 className="text-4xl md:text-6xl font-bold tracking-tight gradient-text">
+        <AnimatedSection className="text-center space-y-5 mb-16">
+          <div className="eyebrow-badge mx-auto w-fit">Parcours</div>
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-slate-900">
             Expérience
           </h2>
-          <p className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
             Mon parcours professionnel et les projets sur lesquels j'ai eu la chance de travailler
           </p>
         </AnimatedSection>
@@ -59,53 +54,53 @@ export default function ExperienceSection() {
               animate={{ rotate: 360 }}
               transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
             >
-              <Loader2 className="h-10 w-10 text-sky-400" />
+              <Loader2 className="h-10 w-10 text-blue-600" />
             </motion.div>
           </div>
         ) : (
           <div className="relative">
             <motion.div
-              className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-sky-500 via-teal-400 to-amber-400 hidden md:block rounded-full"
+              className="absolute left-8 top-0 bottom-0 w-0.5 bg-slate-200 hidden md:block rounded-full"
               initial={{ scaleY: 0, originY: 0 }}
               whileInView={{ scaleY: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
             />
 
-            <div className="space-y-16">
+            <div className="space-y-10">
               {experiences.map((exp, index) => (
                 <motion.div
                   key={exp.id}
                   className="relative"
-                  initial={{ opacity: 0, x: -50 }}
+                  initial={{ opacity: 0, x: -40 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true, margin: '-80px' }}
                   transition={{
                     duration: 0.6,
-                    delay: index * 0.15,
+                    delay: index * 0.12,
                     ease: [0.22, 1, 0.36, 1]
                   }}
                 >
                   <motion.div
-                    className="hidden md:block absolute left-8 top-8 w-4 h-4 bg-gradient-to-br from-sky-500 to-amber-400 rounded-full -translate-x-[7px] ring-4 ring-[#06111d] shadow-lg shadow-sky-500/30"
+                    className="hidden md:flex absolute left-8 top-8 w-4 h-4 items-center justify-center bg-blue-600 rounded-full -translate-x-[7px] ring-4 ring-white shadow-sm"
                     initial={{ scale: 0 }}
                     whileInView={{ scale: 1 }}
                     viewport={{ once: true }}
-                    transition={{ type: 'spring', stiffness: 300, delay: index * 0.15 + 0.3 }}
+                    transition={{ type: 'spring', stiffness: 300, delay: index * 0.12 + 0.3 }}
                   />
 
                   <motion.div
-                    whileHover={{ y: -4 }}
+                    whileHover={{ y: -3 }}
                     transition={{ type: 'spring', stiffness: 300, damping: 25 }}
                   >
-                    <Card className="md:ml-24 glass-surface hover:border-sky-400/45 hover:shadow-2xl hover:shadow-sky-500/15 transition-all duration-500 bg-transparent">
+                    <Card className="md:ml-24 surface-card transition-shadow duration-300 hover:shadow-lg">
                       <CardHeader>
                         <div className="flex flex-wrap gap-3 items-start justify-between mb-2">
                           <div className="space-y-1">
-                            <CardTitle className="text-2xl text-white">
+                            <CardTitle className="text-2xl text-slate-900">
                               {exp.position}
                             </CardTitle>
-                            <CardDescription className="text-lg font-medium text-sky-300">
+                            <CardDescription className="text-lg font-medium text-blue-700">
                               {exp.company}
                             </CardDescription>
                           </div>
@@ -115,23 +110,23 @@ export default function ExperienceSection() {
                               animate={{ scale: 1 }}
                               transition={{ type: 'spring', delay: 0.5 }}
                             >
-                              <Badge className="bg-gradient-to-r from-green-500 to-emerald-500 text-white border-0 shadow-lg shadow-green-500/20">
+                              <Badge className="bg-emerald-100 text-emerald-700 border-0">
                                 En cours
                               </Badge>
                             </motion.div>
                           )}
                         </div>
 
-                        <div className="flex flex-wrap gap-4 text-sm text-slate-400">
-                          <div className="flex items-center gap-1">
-                            <Calendar className="h-4 w-4 text-sky-400" />
+                        <div className="flex flex-wrap gap-4 text-sm text-slate-500">
+                          <div className="flex items-center gap-1.5">
+                            <Calendar className="h-4 w-4 text-slate-400" />
                             <span>
                               {formatDate(exp.start_date)} - {exp.end_date ? formatDate(exp.end_date) : 'Présent'}
                             </span>
                           </div>
                           {exp.location && (
-                            <div className="flex items-center gap-1">
-                              <MapPin className="h-4 w-4 text-amber-300" />
+                            <div className="flex items-center gap-1.5">
+                              <MapPin className="h-4 w-4 text-slate-400" />
                               <span>{exp.location}</span>
                             </div>
                           )}
@@ -139,7 +134,7 @@ export default function ExperienceSection() {
                       </CardHeader>
 
                       <CardContent className="space-y-4">
-                        <p className="text-slate-300 leading-relaxed">
+                        <p className="text-slate-600 leading-relaxed">
                           {exp.description}
                         </p>
 
@@ -152,7 +147,7 @@ export default function ExperienceSection() {
                               viewport={{ once: true }}
                               transition={{ delay: i * 0.05 + 0.3 }}
                             >
-                              <Badge variant="secondary" className="text-xs bg-white/5 text-slate-200 border border-sky-200/20">
+                              <Badge variant="secondary" className="text-xs bg-slate-100 text-slate-700 border border-slate-200 font-normal">
                                 {tech}
                               </Badge>
                             </motion.div>

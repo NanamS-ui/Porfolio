@@ -23,47 +23,66 @@ export default function Contact() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    const name = formData.name.trim();
+    const email = formData.email.trim();
+    const subject = formData.subject.trim();
+    const message = formData.message.trim();
+
+    if (!name || !email || !subject || !message) {
+      toast({
+        title: "Champs manquants",
+        description: "Merci de remplir tous les champs avant d'envoyer votre message.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setLoading(true);
 
     try {
-      // Étape 1 : enregistrer dans la base de données
+      // Étape 1 (critique) : enregistrer le message dans la base de données.
+      // Tant que cette étape réussit, le message est bien reçu même si la notification email échoue.
       const { error: dbError } = await supabase
-          .from('contact_messages')
-          .insert([formData]);
+        .from('contact_messages')
+        .insert([{ name, email, subject, message }]);
 
       if (dbError) throw dbError;
 
-      // Étape 2 : appeler la fonction Deno pour envoyer l’email
-      const response = await fetch(
-          `${process.env.NEXT_PUBLIC_SUPABASE_URL}/functions/v1/send-contact-email`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`,
-            },
-            body: JSON.stringify(formData),
-          }
-      );
-
-      const result = await response.json();
-
-      if (!response.ok || result.error) {
-        throw new Error(result.error || "Erreur lors de l’envoi de l’email.");
-      }
-
-      // Étape 3 : afficher le succès et réinitialiser le formulaire
       toast({
         title: "Message envoyé ✅",
         description: "Merci pour votre message ! Je vous répondrai dès que possible.",
       });
+      setFormData({ name: '', email: '', subject: '', message: '' });
 
-      setFormData({ name: "", email: "", subject: "", message: "" });
+      // Étape 2 (best-effort) : notifier par email via la fonction Supabase.
+      // Un échec ici ne doit pas faire croire au visiteur que son message n'est pas arrivé.
+      const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+      const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+      if (supabaseUrl && supabaseAnonKey) {
+        try {
+          const response = await fetch(`${supabaseUrl}/functions/v1/send-contact-email`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${supabaseAnonKey}`,
+            },
+            body: JSON.stringify({ name, email, subject, message }),
+          });
+
+          if (!response.ok) {
+            console.warn('Notification email non envoyée (fonction indisponible), le message reste enregistré.');
+          }
+        } catch (emailError) {
+          console.warn('Notification email impossible, le message reste enregistré.', emailError);
+        }
+      }
     } catch (error: any) {
-      console.error("Erreur contact:", error.message);
+      console.error('Erreur contact:', error?.message ?? error);
       toast({
         title: "Erreur ❌",
-        description: "Impossible d’envoyer le message. Veuillez réessayer.",
+        description: "Impossible d'enregistrer votre message. Veuillez réessayer dans quelques instants.",
         variant: "destructive",
       });
     } finally {
@@ -78,40 +97,31 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="py-32 px-4 section-dark-alt section-grid overflow-hidden">
+    <section id="contact" className="py-28 px-4 section-alt section-grid overflow-hidden">
       <div className="max-w-4xl mx-auto">
-        <AnimatedSection className="text-center space-y-6 mb-20">
-          <motion.div
-            className="inline-block px-4 py-2 glass rounded-full text-sm font-medium text-sky-300 mb-4"
-            whileHover={{ scale: 1.05 }}
-          >
-            Contact
-          </motion.div>
-          <h2 className="text-4xl md:text-6xl font-bold tracking-tight gradient-text">
+        <AnimatedSection className="text-center space-y-5 mb-16">
+          <div className="eyebrow-badge mx-auto w-fit">Contact</div>
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-slate-900">
             Me Contacter
           </h2>
-          <p className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
             Vous avez un projet en tête ? Discutons-en ensemble
           </p>
         </AnimatedSection>
 
         <motion.div
-          initial={{ opacity: 0, y: 60, scale: 0.95 }}
-          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         >
-          <Card className="glass-strong glow-primary bg-transparent">
+          <Card className="surface-card shadow-md">
             <CardHeader className="text-center pb-8">
-              <motion.div
-                className="w-20 h-20 bg-gradient-to-br from-sky-600 to-amber-400 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-xl shadow-sky-500/20"
-                whileHover={{ rotate: 360, scale: 1.1 }}
-                transition={{ duration: 0.6 }}
-              >
-                <Mail className="h-10 w-10 text-white" />
-              </motion.div>
-              <CardTitle className="text-3xl font-bold text-white">Envoyez-moi un message</CardTitle>
-              <CardDescription className="text-base mt-3 text-slate-300">
+              <div className="w-16 h-16 icon-chip rounded-2xl mx-auto mb-6">
+                <Mail className="h-8 w-8" />
+              </div>
+              <CardTitle className="text-3xl font-bold text-slate-900">Envoyez-moi un message</CardTitle>
+              <CardDescription className="text-base mt-3 text-slate-600">
                 Remplissez le formulaire ci-dessous et je vous répondrai dans les plus brefs délais
               </CardDescription>
             </CardHeader>
@@ -126,7 +136,7 @@ export default function Contact() {
                   transition={{ delay: 0.2 }}
                 >
                   <div className="space-y-2">
-                    <label htmlFor="name" className="text-sm font-medium text-slate-300">
+                    <label htmlFor="name" className="text-sm font-medium text-slate-700">
                       Nom complet
                     </label>
                     <Input
@@ -136,12 +146,12 @@ export default function Contact() {
                       onChange={handleChange}
                       required
                       placeholder="Jean Dupont"
-                      className="bg-white/5 border-sky-200/20 text-white placeholder:text-slate-500 focus:ring-2 focus:ring-sky-500/50 focus:border-sky-500/50 transition-all duration-300"
+                      className="bg-white border-slate-200 text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500 transition-all duration-300"
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <label htmlFor="email" className="text-sm font-medium text-slate-300">
+                    <label htmlFor="email" className="text-sm font-medium text-slate-700">
                       Email
                     </label>
                     <Input
@@ -152,7 +162,7 @@ export default function Contact() {
                       onChange={handleChange}
                       required
                       placeholder="jean@example.com"
-                      className="bg-white/5 border-sky-200/20 text-white placeholder:text-slate-500 focus:ring-2 focus:ring-sky-500/50 focus:border-sky-500/50 transition-all duration-300"
+                      className="bg-white border-slate-200 text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500 transition-all duration-300"
                     />
                   </div>
                 </motion.div>
@@ -164,7 +174,7 @@ export default function Contact() {
                   viewport={{ once: true }}
                   transition={{ delay: 0.3 }}
                 >
-                  <label htmlFor="subject" className="text-sm font-medium text-slate-300">
+                  <label htmlFor="subject" className="text-sm font-medium text-slate-700">
                     Sujet
                   </label>
                   <Input
@@ -174,7 +184,7 @@ export default function Contact() {
                     onChange={handleChange}
                     required
                     placeholder="À propos de..."
-                    className="bg-white/5 border-sky-200/20 text-white placeholder:text-slate-500 focus:ring-2 focus:ring-sky-500/50 focus:border-sky-500/50 transition-all duration-300"
+                    className="bg-white border-slate-200 text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500 transition-all duration-300"
                   />
                 </motion.div>
 
@@ -185,7 +195,7 @@ export default function Contact() {
                   viewport={{ once: true }}
                   transition={{ delay: 0.4 }}
                 >
-                  <label htmlFor="message" className="text-sm font-medium text-slate-300">
+                  <label htmlFor="message" className="text-sm font-medium text-slate-700">
                     Message
                   </label>
                   <Textarea
@@ -196,7 +206,7 @@ export default function Contact() {
                     required
                     placeholder="Votre message..."
                     rows={6}
-                    className="bg-white/5 border-sky-200/20 text-white placeholder:text-slate-500 resize-none focus:ring-2 focus:ring-sky-500/50 focus:border-sky-500/50 transition-all duration-300"
+                    className="bg-white border-slate-200 text-slate-900 placeholder:text-slate-400 resize-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500 transition-all duration-300"
                   />
                 </motion.div>
 
@@ -211,7 +221,7 @@ export default function Contact() {
                   <Button
                     type="submit"
                     disabled={loading}
-                    className="w-full bg-gradient-to-r from-sky-600 to-cyan-500 hover:from-sky-500 hover:to-cyan-400 text-white h-14 text-base font-medium shadow-lg shadow-sky-500/25 hover:shadow-sky-500/40 transition-all duration-300 border-0"
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white h-14 text-base font-medium shadow-md shadow-blue-600/20 transition-all duration-300 border-0"
                   >
                     {loading ? (
                       <>
