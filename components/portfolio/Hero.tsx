@@ -36,7 +36,10 @@ export default function Hero() {
     element?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const publicUrl = 'https://res.cloudinary.com/drakabvg2/image/upload/v1759923729/001_nysary_mayy4m.jpg';
+  // Recadrage carré centré sur le visage + taille exacte demandée à Cloudinary,
+  // pour éviter toute déformation/flou liée à un redimensionnement CSS d'une image non carrée.
+  const publicUrl =
+    'https://res.cloudinary.com/drakabvg2/image/upload/w_480,h_480,c_fill,g_face,q_auto,f_auto,dpr_2.0/v1759923729/001_nysary_mayy4m.jpg';
 
   return (
     <section className="min-h-screen flex items-center relative px-4 pt-28 pb-16 md:pt-32 md:pb-20 overflow-hidden section-grid">
@@ -139,16 +142,20 @@ export default function Hero() {
               whileHover={{ y: -3 }}
               transition={{ type: 'spring', stiffness: 230, damping: 24 }}
             >
-              <div className="relative mx-auto w-fit">
-                <motion.img
+              <motion.div
+                className="relative mx-auto w-40 h-40 md:w-48 md:h-48"
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ type: 'spring', stiffness: 150, damping: 20, delay: 0.2 }}
+              >
+                <img
                   src={publicUrl}
                   alt="Photo de Toky Ralison"
-                  className="relative w-40 h-40 md:w-48 md:h-48 mx-auto rounded-2xl object-cover ring-4 ring-blue-50 shadow-md"
-                  initial={{ scale: 0.9, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{ type: 'spring', stiffness: 150, damping: 20, delay: 0.2 }}
+                  width={480}
+                  height={480}
+                  className="block w-full h-full rounded-2xl object-cover object-center ring-4 ring-blue-50 shadow-md"
                 />
-              </div>
+              </motion.div>
             </motion.div>
 
             <div className="grid grid-cols-1 gap-3">
