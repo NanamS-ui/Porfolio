@@ -55,6 +55,11 @@ Deno.serve(async (req: Request) => {
     const verifyResult = await verifyResponse.json();
 
     if (!verifyResult.success) {
+      // "error-codes" tells us exactly why hCaptcha rejected the token, e.g.
+      // "invalid-input-secret" (wrong/mismatched secret key) or
+      // "timeout-or-duplicate" (token expired or already used). Check with:
+      //   supabase functions logs quick-action
+      console.error('hCaptcha siteverify failed:', JSON.stringify(verifyResult));
       return json({ error: 'Vérification anti-robot échouée. Veuillez réessayer.' }, 400);
     }
 
