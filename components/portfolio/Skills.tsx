@@ -1,43 +1,14 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { supabase, type Skill } from '@/lib/supabase';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { motion } from 'framer-motion';
 import { AnimatedSection, StaggerContainer, StaggerItem } from '@/components/animations/MotionComponents';
-
-function AnimatedProgressBar({ value, delay = 0 }: { value: number; delay?: number }) {
-  const [width, setWidth] = useState(0);
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => setWidth(value), delay * 1000);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.5 }
-    );
-
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, [value, delay]);
-
-  return (
-    <div ref={ref} className="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-2 overflow-hidden">
-      <motion.div
-        className="h-full bg-blue-600 dark:bg-blue-500 rounded-full"
-        initial={{ width: 0 }}
-        animate={{ width: `${width}%` }}
-        transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
-      />
-    </div>
-  );
-}
+import { useLanguage } from '@/components/language-provider';
+import { localize } from '@/lib/localize';
+import { TechIcon } from '@/components/tech-icon';
 
 function SkillCardSkeleton() {
   return (
@@ -48,22 +19,19 @@ function SkillCardSkeleton() {
           <Skeleton className="h-6 w-32" />
         </div>
       </CardHeader>
-      <CardContent className="space-y-4">
-        {Array.from({ length: 4 }).map((_, i) => (
-          <div key={i} className="space-y-2">
-            <div className="flex justify-between items-center">
-              <Skeleton className="h-4 w-24" />
-              <Skeleton className="h-4 w-8" />
-            </div>
-            <Skeleton className="h-2 w-full rounded-full" />
-          </div>
-        ))}
+      <CardContent>
+        <div className="flex flex-wrap gap-2">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <Skeleton key={i} className="h-10 w-28 rounded-xl" />
+          ))}
+        </div>
       </CardContent>
     </Card>
   );
 }
 
 export default function Skills() {
+  const { t, language } = useLanguage();
   const [skills, setSkills] = useState<Skill[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -95,13 +63,7 @@ export default function Skills() {
     return acc;
   }, {} as Record<string, Skill[]>);
 
-  const categoryNames: Record<string, string> = {
-    frontend: 'Frontend',
-    backend: 'Backend',
-    database: 'Bases de données',
-    tools: 'Outils & DevOps',
-    design: 'Design',
-  };
+  const categoryNames: Record<string, string> = t.skills.categories;
 
   const categoryIcons: Record<string, string> = {
     frontend: '🎨',
@@ -115,12 +77,12 @@ export default function Skills() {
     <section id="skills" className="py-28 px-4 section-alt section-grid overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <AnimatedSection className="text-center space-y-5 mb-16">
-          <div className="eyebrow-badge mx-auto w-fit">Expertise</div>
+          <div className="eyebrow-badge mx-auto w-fit">{t.skills.eyebrow}</div>
           <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-slate-900 dark:text-white">
-            Compétences
+            {t.skills.title}
           </h2>
           <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
-            Technologies et outils que je maîtrise pour créer des applications performantes et innovantes
+            {t.skills.subtitle}
           </p>
         </AnimatedSection>
 
@@ -132,7 +94,7 @@ export default function Skills() {
           </div>
         ) : (
           <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {Object.entries(groupedSkills).map(([category, categorySkills], catIndex) => (
+            {Object.entries(groupedSkills).map(([category, categorySkills]) => (
               <StaggerItem key={category}>
                 <motion.div
                   whileHover={{ y: -3 }}
@@ -147,28 +109,25 @@ export default function Skills() {
                         {categoryNames[category] || category}
                       </CardTitle>
                     </CardHeader>
-                    <CardContent className="space-y-4">
-                      {categorySkills.map((skill, skillIndex) => (
-                        <motion.div
-                          key={skill.id}
-                          className="space-y-2"
-                          initial={{ opacity: 0, x: -20 }}
-                          whileInView={{ opacity: 1, x: 0 }}
-                          viewport={{ once: true }}
-                          transition={{ delay: skillIndex * 0.05, duration: 0.4 }}
-                        >
-                          <div className="flex justify-between items-center">
-                            <span className="font-medium text-slate-700 dark:text-slate-300">{skill.name}</span>
-                            <Badge variant="secondary" className="text-xs bg-slate-100 text-slate-600 border border-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:border-slate-700 font-normal">
-                              {skill.proficiency}%
-                            </Badge>
-                          </div>
-                          <AnimatedProgressBar
-                            value={skill.proficiency}
-                            delay={catIndex * 0.2 + skillIndex * 0.05}
-                          />
-                        </motion.div>
-                      ))}
+                    <CardContent>
+                      <div className="flex flex-wrap gap-2">
+                        {categorySkills.map((skill, skillIndex) => (
+                          <motion.div
+                            key={skill.id}
+                            className="group inline-flex items-center gap-2 px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-blue-300 dark:hover:border-blue-500/50 hover:shadow-sm transition-all duration-300"
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: skillIndex * 0.04, duration: 0.3 }}
+                            whileHover={{ y: -2 }}
+                          >
+                            <TechIcon name={skill.name} icon={skill.icon} className="h-5 w-5 shrink-0" />
+                            <span className="text-sm font-medium text-slate-700 dark:text-slate-300 whitespace-nowrap">
+                              {localize(skill.name, skill.name_en, language)}
+                            </span>
+                          </motion.div>
+                        ))}
+                      </div>
                     </CardContent>
                   </Card>
                 </motion.div>
@@ -179,7 +138,7 @@ export default function Skills() {
 
         {!loading && skills.length === 0 && (
           <div className="text-center py-20 text-slate-500 dark:text-slate-400">
-            Aucune compétence ajoutée pour le moment
+            {t.skills.empty}
           </div>
         )}
       </div>

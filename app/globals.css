@@ -83,6 +83,20 @@
     @apply dark:border-blue-500/20 dark:bg-blue-500/10 dark:text-blue-300;
   }
 
+  /* Rectangular portrait frame with a soft edge fade on all four sides -
+     blends into the page background without a hard card border, but keeps
+     a clean rectangular silhouette (no oval/circular cutout). */
+  .photo-blend {
+    -webkit-mask-composite: source-in;
+    mask-composite: intersect;
+    -webkit-mask-image:
+      linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%),
+      linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+    mask-image:
+      linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%),
+      linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+  }
+
   .icon-chip {
     @apply inline-flex items-center justify-center rounded-xl bg-blue-600 text-white shadow-sm shadow-blue-600/20;
     @apply dark:bg-blue-500 dark:shadow-blue-500/20;
@@ -148,6 +162,9 @@
 
   html {
     scroll-behavior: smooth;
+    /* Clears the fixed navbar (~64px) so section headings aren't hidden underneath
+       after scrollIntoView() or an anchor jump, with a little breathing room. */
+    scroll-padding-top: 6rem;
   }
 
   /* Custom scrollbar */

@@ -4,19 +4,22 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Code2, Menu, X, ArrowRight, Mail, Download } from 'lucide-react';
 import { ThemeToggle } from '@/components/theme-toggle';
-
-const navLinks = [
-  { href: 'projects', label: 'Projets' },
-  { href: 'skills', label: 'Compétences' },
-  { href: 'experience', label: 'Expérience' },
-  { href: 'formation', label: 'Formation' },
-  { href: 'contact', label: 'Contact' },
-];
+import { LanguageToggle } from '@/components/language-toggle';
+import { useLanguage } from '@/components/language-provider';
 
 export default function Navbar() {
+  const { t } = useLanguage();
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('');
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  const navLinks = [
+    { href: 'projects', label: t.nav.projects },
+    { href: 'skills', label: t.nav.skills },
+    { href: 'experience', label: t.nav.experience },
+    { href: 'formation', label: t.nav.formation },
+    { href: 'contact', label: t.nav.contact },
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -38,6 +41,7 @@ export default function Navbar() {
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -78,14 +82,14 @@ export default function Navbar() {
             <button
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
               className="flex items-center gap-2.5"
-              aria-label="Retour en haut de page"
+              aria-label={t.nav.backToTop}
             >
               <span className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-blue-600 dark:bg-blue-500 shadow-sm shadow-blue-600/25">
                 <Code2 className="h-5 w-5 text-white" />
               </span>
               <span className="hidden sm:block text-left leading-tight">
                 <span className="block text-sm font-semibold text-slate-900 dark:text-white">Toky Ralison</span>
-                <span className="block text-[10px] uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Développeur Junior</span>
+                <span className="block text-[10px] uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">{t.nav.brandRole}</span>
               </span>
             </button>
 
@@ -115,6 +119,7 @@ export default function Navbar() {
             </ul>
 
             <div className="ml-auto hidden lg:flex items-center gap-2">
+              <LanguageToggle />
               <ThemeToggle />
               <a
                 href="https://nrqjrzgmifkjamiikcxd.supabase.co/storage/v1/object/public/CV_portfolio/CV_Toky.pdf"
@@ -122,23 +127,24 @@ export default function Navbar() {
                 className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 dark:border-slate-700 px-3.5 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
               >
                 <Download className="h-4 w-4" />
-                CV
+                {t.nav.cv}
               </a>
               <button
                 onClick={() => scrollTo('contact')}
                 className="inline-flex items-center gap-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-400 px-4 py-2 text-sm font-medium text-white shadow-sm shadow-blue-600/25 transition-colors"
               >
-                Contact
+                {t.nav.contact}
                 <Mail className="h-4 w-4" />
               </button>
             </div>
 
             <div className="ml-auto flex items-center gap-2 lg:hidden">
+              <LanguageToggle />
               <ThemeToggle />
               <button
                 className="rounded-lg border border-slate-200 dark:border-slate-700 p-2 text-slate-700 dark:text-slate-300"
                 onClick={() => setMobileOpen(!mobileOpen)}
-                aria-label={mobileOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
+                aria-label={mobileOpen ? t.nav.closeMenu : t.nav.openMenu}
                 aria-expanded={mobileOpen}
               >
                 {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -167,7 +173,7 @@ export default function Navbar() {
             >
               <div className="px-4 py-3 rounded-xl bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-slate-800">
                 <p className="text-slate-900 dark:text-white font-semibold text-sm">Toky Ralison</p>
-                <p className="text-slate-500 dark:text-slate-400 text-xs">Développeur Full Stack Junior</p>
+                <p className="text-slate-500 dark:text-slate-400 text-xs">{t.nav.mobileRole}</p>
               </div>
               {navLinks.map((link, i) => (
                 <motion.button
@@ -196,7 +202,7 @@ export default function Navbar() {
                   transition={{ delay: 0.26 }}
                 >
                   <Download className="h-4 w-4" />
-                  CV
+                  {t.nav.cv}
                 </motion.a>
                 <motion.button
                   onClick={() => scrollTo('contact')}
@@ -205,7 +211,7 @@ export default function Navbar() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.3 }}
                 >
-                  Contact
+                  {t.nav.contact}
                   <ArrowRight className="h-4 w-4" />
                 </motion.button>
               </div>

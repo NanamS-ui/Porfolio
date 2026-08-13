@@ -3,6 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { Github, Linkedin, Mail, Download, ChevronDown, ArrowUpRight, MapPin, GraduationCap, CircleCheck } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useLanguage } from '@/components/language-provider';
 
 const easeOut = [0.22, 1, 0.36, 1] as [number, number, number, number];
 
@@ -24,13 +25,9 @@ const socialVariants = {
   visible: { opacity: 1, scale: 1, transition: { type: 'spring' as const, stiffness: 200, damping: 15 } },
 };
 
-const statTiles = [
-  { icon: CircleCheck, label: 'Disponibilité', value: 'Ouvert aux opportunités', accent: 'text-emerald-600 bg-emerald-50 dark:text-emerald-400 dark:bg-emerald-500/10' },
-  { icon: GraduationCap, label: 'Profil', value: 'Développeur Full Stack Junior', accent: 'text-blue-600 bg-blue-50 dark:text-blue-400 dark:bg-blue-500/10' },
-  { icon: MapPin, label: 'Localisation', value: 'Antananarivo, Madagascar', accent: 'text-slate-600 bg-slate-100 dark:text-slate-300 dark:bg-slate-800' },
-];
-
 export default function Hero() {
+  const { t } = useLanguage();
+
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     element?.scrollIntoView({ behavior: 'smooth' });
@@ -39,7 +36,13 @@ export default function Hero() {
   // Recadrage carré centré sur le visage + taille exacte demandée à Cloudinary,
   // pour éviter toute déformation/flou liée à un redimensionnement CSS d'une image non carrée.
   const publicUrl =
-    'https://res.cloudinary.com/drakabvg2/image/upload/w_480,h_480,c_fill,g_face,q_auto,f_auto,dpr_2.0/v1759923729/001_nysary_mayy4m.jpg';
+    'https://res.cloudinary.com/drakabvg2/image/upload/w_760,h_900,c_fill,g_face,q_auto,f_auto,dpr_2.0/v1759923729/001_nysary_mayy4m.jpg';
+
+  const statTiles = [
+    { icon: CircleCheck, label: t.hero.stats.availabilityLabel, value: t.hero.stats.availabilityValue, accent: 'text-emerald-600 bg-emerald-50 dark:text-emerald-400 dark:bg-emerald-500/10' },
+    { icon: GraduationCap, label: t.hero.stats.profileLabel, value: t.hero.stats.profileValue, accent: 'text-blue-600 bg-blue-50 dark:text-blue-400 dark:bg-blue-500/10' },
+    { icon: MapPin, label: t.hero.stats.locationLabel, value: t.hero.stats.locationValue, accent: 'text-slate-600 bg-slate-100 dark:text-slate-300 dark:bg-slate-800' },
+  ];
 
   return (
     <section className="min-h-screen flex items-center relative px-4 pt-28 pb-16 md:pt-32 md:pb-20 overflow-hidden section-grid">
@@ -59,7 +62,7 @@ export default function Hero() {
           <motion.div className="space-y-7 text-left" variants={itemVariants}>
             <motion.div className="eyebrow-badge" variants={itemVariants}>
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-              Disponible pour un poste ou une mission
+              {t.hero.badge}
             </motion.div>
 
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight">
@@ -67,13 +70,12 @@ export default function Hero() {
                 Toky Ralison
               </motion.span>
               <motion.span className="block gradient-text" variants={itemVariants}>
-                Développeur Full Stack Junior
+                {t.hero.role}
               </motion.span>
             </h1>
 
             <motion.p className="text-base md:text-lg text-slate-600 dark:text-slate-400 max-w-2xl leading-relaxed" variants={itemVariants}>
-              Je conçois des applications web rapides, élégantes et robustes, avec une forte exigence UX
-              et une architecture propre. Toujours motivé à apprendre et à progresser.
+              {t.hero.pitch}
             </motion.p>
 
             <motion.div className="flex flex-wrap gap-3" variants={itemVariants}>
@@ -84,7 +86,7 @@ export default function Hero() {
                   className="bg-blue-600 hover:bg-blue-700 text-white shadow-md shadow-blue-600/20 transition-all duration-300 border-0"
                 >
                   <Mail className="mr-2 h-5 w-5" />
-                  Démarrer un projet
+                  {t.hero.ctaPrimary}
                 </Button>
               </motion.div>
 
@@ -97,7 +99,7 @@ export default function Hero() {
                 >
                   <a href="https://nrqjrzgmifkjamiikcxd.supabase.co/storage/v1/object/public/CV_portfolio/CV_Toky.pdf" download>
                     <Download className="mr-2 h-5 w-5" />
-                    Télécharger CV
+                    {t.hero.ctaSecondary}
                   </a>
                 </Button>
               </motion.div>
@@ -108,7 +110,7 @@ export default function Hero() {
                 whileHover={{ x: 2 }}
                 whileTap={{ scale: 0.97 }}
               >
-                Voir mes projets
+                {t.hero.ctaTertiary}
                 <ArrowUpRight className="h-4 w-4" />
               </motion.button>
             </motion.div>
@@ -137,25 +139,18 @@ export default function Hero() {
           </motion.div>
 
           <motion.div className="space-y-4" variants={itemVariants}>
+            {/* Photo fondue dans le fond de section (pas de cadre/bordure) */}
             <motion.div
-              className="relative surface-card p-6"
-              whileHover={{ y: -3 }}
-              transition={{ type: 'spring', stiffness: 230, damping: 24 }}
+              className="relative h-[360px] sm:h-[440px] md:h-full md:min-h-[520px]"
+              initial={{ scale: 0.94, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ type: 'spring', stiffness: 150, damping: 20, delay: 0.2 }}
             >
-              <motion.div
-                className="relative mx-auto w-40 h-40 md:w-48 md:h-48"
-                initial={{ scale: 0.9, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ type: 'spring', stiffness: 150, damping: 20, delay: 0.2 }}
-              >
-                <img
-                  src={publicUrl}
-                  alt="Photo de Toky Ralison"
-                  width={480}
-                  height={480}
-                  className="block w-full h-full rounded-2xl object-cover object-center ring-4 ring-blue-50 dark:ring-blue-500/10 shadow-md"
-                />
-              </motion.div>
+              <img
+                src={publicUrl}
+                alt={t.hero.photoAlt}
+                className="photo-blend absolute inset-0 w-full h-full object-cover object-top"
+              />
             </motion.div>
 
             <div className="grid grid-cols-1 gap-3">
@@ -194,7 +189,7 @@ export default function Hero() {
             animate={{ y: [0, 8, 0] }}
             transition={{ duration: 2, repeat: Infinity }}
           >
-            <span className="text-xs font-medium tracking-wider uppercase">Découvrir</span>
+            <span className="text-xs font-medium tracking-wider uppercase">{t.hero.discover}</span>
             <ChevronDown className="h-5 w-5" />
           </motion.button>
         </motion.div>

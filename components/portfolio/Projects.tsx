@@ -11,6 +11,8 @@ import { ExternalLink, Github } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AnimatedSection } from '@/components/animations/MotionComponents';
 import { optimizeImageUrl } from '@/lib/cloudinary';
+import { useLanguage } from '@/components/language-provider';
+import { localize } from '@/lib/localize';
 
 const easeOut = [0.22, 1, 0.36, 1] as [number, number, number, number];
 
@@ -54,6 +56,7 @@ function ProjectCardSkeleton() {
 }
 
 export default function Projects() {
+  const { t, language } = useLanguage();
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
@@ -84,12 +87,12 @@ export default function Projects() {
     <section id="projects" className="py-28 px-4 section-grid overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <AnimatedSection className="text-center space-y-5 mb-16">
-          <div className="eyebrow-badge mx-auto w-fit">Portfolio</div>
+          <div className="eyebrow-badge mx-auto w-fit">{t.projects.eyebrow}</div>
           <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-slate-900 dark:text-white">
-            Mes Projets
+            {t.projects.title}
           </h2>
           <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
-            Une sélection de mes réalisations récentes démontrant mes compétences techniques et ma créativité
+            {t.projects.subtitle}
           </p>
         </AnimatedSection>
 
@@ -102,7 +105,7 @@ export default function Projects() {
                   value={category}
                   className="capitalize px-5 py-2 text-slate-600 dark:text-slate-400 data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:shadow-sm border border-slate-200 dark:border-slate-700 data-[state=active]:border-blue-600 rounded-lg transition-all duration-300"
                 >
-                  {category === 'all' ? 'Tous' : category}
+                  {category === 'all' ? t.projects.all : category}
                 </TabsTrigger>
               ))}
             </TabsList>
@@ -140,23 +143,23 @@ export default function Projects() {
                     <div className="relative overflow-hidden aspect-video bg-slate-100 dark:bg-slate-800">
                       <img
                         src={optimizeImageUrl(project.image_url, { width: 800, height: 450, crop: 'fill', gravity: 'auto' })}
-                        alt={project.title}
+                        alt={localize(project.title, project.title_en, language)}
                         loading="lazy"
                         className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500"
                       />
                       {project.featured && (
                         <Badge className="absolute top-3 right-3 bg-blue-600 dark:bg-blue-500 text-white border-0 shadow-sm">
-                          En vedette
+                          {t.projects.featured}
                         </Badge>
                       )}
                     </div>
 
                     <CardHeader>
                       <CardTitle className="text-xl text-slate-900 dark:text-white group-hover:text-blue-700 dark:group-hover:text-blue-400 transition-colors">
-                        {project.title}
+                        {localize(project.title, project.title_en, language)}
                       </CardTitle>
                       <CardDescription className="line-clamp-2 text-slate-600 dark:text-slate-400">
-                        {project.short_description}
+                        {localize(project.short_description, project.short_description_en, language)}
                       </CardDescription>
                     </CardHeader>
 
@@ -185,7 +188,7 @@ export default function Projects() {
                         >
                           <a href={project.demo_url} target="_blank" rel="noopener noreferrer">
                             <ExternalLink className="mr-2 h-4 w-4" />
-                            Démo
+                            {t.projects.demo}
                           </a>
                         </Button>
                       )}
@@ -198,7 +201,7 @@ export default function Projects() {
                         >
                           <a href={project.github_url} target="_blank" rel="noopener noreferrer">
                             <Github className="mr-2 h-4 w-4" />
-                            Code
+                            {t.projects.code}
                           </a>
                         </Button>
                       )}
@@ -216,7 +219,7 @@ export default function Projects() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
           >
-            Aucun projet trouvé dans cette catégorie
+            {t.projects.empty}
           </motion.div>
         )}
       </div>

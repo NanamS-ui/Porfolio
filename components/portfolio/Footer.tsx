@@ -3,8 +3,10 @@
 import { Github, Linkedin, Mail, Heart, ArrowUp, Code, Sparkles } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLanguage } from '@/components/language-provider';
 
 export default function Footer() {
+  const { t } = useLanguage();
   const currentYear = new Date().getFullYear();
   const [showScrollTop, setShowScrollTop] = useState(false);
 
@@ -45,10 +47,10 @@ export default function Footer() {
   ];
 
   const navigationLinks = [
-    { href: "#projects", label: "Projets" },
-    { href: "#skills", label: "Compétences" },
-    { href: "#experience", label: "Expérience" },
-    { href: "#contact", label: "Contact" }
+    { href: "#projects", label: t.nav.projects },
+    { href: "#skills", label: t.nav.skills },
+    { href: "#experience", label: t.nav.experience },
+    { href: "#contact", label: t.nav.contact }
   ];
 
   return (
@@ -92,14 +94,13 @@ export default function Footer() {
                     </h3>
                   </div>
                   <p className="text-slate-400 leading-relaxed max-w-md">
-                    Développeur Full Stack Junior passionné par la création d'expériences web exceptionnelles.
-                    Motivé pour apprendre, progresser et contribuer à des projets ambitieux.
+                    {t.footer.tagline}
                   </p>
                 </div>
 
                 {/* Social links */}
                 <div className="space-y-4">
-                  <h4 className="text-lg font-semibold text-white">Me suivre</h4>
+                  <h4 className="text-lg font-semibold text-white">{t.footer.followMe}</h4>
                   <div className="flex gap-3">
                     {socialLinks.map((social, index) => (
                         <motion.a
@@ -125,7 +126,7 @@ export default function Footer() {
 
               {/* Navigation */}
               <div className="space-y-6">
-                <h4 className="text-lg font-semibold text-white">Navigation</h4>
+                <h4 className="text-lg font-semibold text-white">{t.footer.navigation}</h4>
                 <ul className="space-y-3">
                   {navigationLinks.map((link, index) => (
                       <li key={link.label}>
@@ -152,7 +153,7 @@ export default function Footer() {
 
               {/* Contact info */}
               <div className="space-y-6">
-                <h4 className="text-lg font-semibold text-white">Contact</h4>
+                <h4 className="text-lg font-semibold text-white">{t.footer.contactHeading}</h4>
                 <div className="space-y-3">
                   <div className="flex items-center gap-3 text-slate-400">
                     <Mail className="h-4 w-4 text-blue-400" />
@@ -209,7 +210,7 @@ export default function Footer() {
                   </div>
                   <div className="flex items-center gap-3 text-slate-400">
                     <Sparkles className="h-4 w-4 text-blue-400" />
-                    <span className="text-sm">Disponible pour projets</span>
+                    <span className="text-sm">{t.footer.availableForProjects}</span>
                   </div>
                 </div>
               </div>
@@ -219,12 +220,12 @@ export default function Footer() {
             <div className="border-t border-white/10 pt-8">
               <div className="flex flex-col md:flex-row justify-between items-center gap-4">
                   <div className="flex items-center gap-2 text-slate-400 text-sm">
-                  <span>© {currentYear} Toky Ralison. Tous droits réservés.</span>
+                  <span>© {currentYear} Toky Ralison. {t.footer.rights}</span>
                   <Heart className="h-4 w-4 text-red-500" />
                 </div>
 
                 <div className="flex items-center gap-2 text-sm text-slate-500">
-                  <span>Conçu et développé avec Next.js & Tailwind CSS</span>
+                  <span>{t.footer.madeWith}</span>
                 </div>
               </div>
             </div>

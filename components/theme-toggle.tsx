@@ -4,9 +4,11 @@ import { useEffect, useState } from 'react';
 import { useTheme } from 'next-themes';
 import { Moon, Sun } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLanguage } from '@/components/language-provider';
 
 export function ThemeToggle({ className = '' }: { className?: string }) {
   const { resolvedTheme, setTheme } = useTheme();
+  const { t } = useLanguage();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => setMounted(true), []);
@@ -21,7 +23,7 @@ export function ThemeToggle({ className = '' }: { className?: string }) {
     <button
       onClick={() => setTheme(isDark ? 'light' : 'dark')}
       className={`inline-flex h-9 w-9 items-center justify-center overflow-hidden rounded-lg border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors ${className}`}
-      aria-label={isDark ? 'Activer le mode clair' : 'Activer le mode sombre'}
+      aria-label={isDark ? t.theme.toLight : t.theme.toDark}
     >
       <AnimatePresence mode="wait" initial={false}>
         <motion.span

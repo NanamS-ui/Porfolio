@@ -7,9 +7,11 @@ import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { MapPin, Calendar } from 'lucide-react';
 import { format } from 'date-fns';
-import { fr } from 'date-fns/locale';
+import { fr, enUS } from 'date-fns/locale';
 import { motion } from 'framer-motion';
 import { AnimatedSection } from '@/components/animations/MotionComponents';
+import { useLanguage } from '@/components/language-provider';
+import { localize } from '@/lib/localize';
 
 function ExperienceCardSkeleton() {
   return (
@@ -37,6 +39,7 @@ function ExperienceCardSkeleton() {
 }
 
 export default function ExperienceSection() {
+  const { t, language } = useLanguage();
   const [experiences, setExperiences] = useState<Experience[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -58,19 +61,19 @@ export default function ExperienceSection() {
   };
 
   const formatDate = (dateString: string) => {
-    return format(new Date(dateString), 'MMM yyyy', { locale: fr });
+    return format(new Date(dateString), 'MMM yyyy', { locale: language === 'en' ? enUS : fr });
   };
 
   return (
     <section id="experience" className="py-28 px-4 section-grid overflow-hidden">
       <div className="max-w-5xl mx-auto">
         <AnimatedSection className="text-center space-y-5 mb-16">
-          <div className="eyebrow-badge mx-auto w-fit">Parcours</div>
+          <div className="eyebrow-badge mx-auto w-fit">{t.experience.eyebrow}</div>
           <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-slate-900 dark:text-white">
-            Expérience
+            {t.experience.title}
           </h2>
           <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
-            Mon parcours professionnel et les projets sur lesquels j'ai eu la chance de travailler
+            {t.experience.subtitle}
           </p>
         </AnimatedSection>
 
@@ -121,7 +124,7 @@ export default function ExperienceSection() {
                         <div className="flex flex-wrap gap-3 items-start justify-between mb-2">
                           <div className="space-y-1">
                             <CardTitle className="text-2xl text-slate-900 dark:text-white">
-                              {exp.position}
+                              {localize(exp.position, exp.position_en, language)}
                             </CardTitle>
                             <CardDescription className="text-lg font-medium text-blue-700 dark:text-blue-400">
                               {exp.company}
@@ -134,7 +137,7 @@ export default function ExperienceSection() {
                               transition={{ type: 'spring', delay: 0.5 }}
                             >
                               <Badge className="bg-emerald-100 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400 border-0">
-                                En cours
+                                {t.experience.current}
                               </Badge>
                             </motion.div>
                           )}
@@ -144,7 +147,7 @@ export default function ExperienceSection() {
                           <div className="flex items-center gap-1.5">
                             <Calendar className="h-4 w-4 text-slate-400 dark:text-slate-500" />
                             <span>
-                              {formatDate(exp.start_date)} - {exp.end_date ? formatDate(exp.end_date) : 'Présent'}
+                              {formatDate(exp.start_date)} - {exp.end_date ? formatDate(exp.end_date) : t.experience.present}
                             </span>
                           </div>
                           {exp.location && (
@@ -158,7 +161,7 @@ export default function ExperienceSection() {
 
                       <CardContent className="space-y-4">
                         <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
-                          {exp.description}
+                          {localize(exp.description, exp.description_en, language)}
                         </p>
 
                         <div className="flex flex-wrap gap-2">
@@ -187,7 +190,7 @@ export default function ExperienceSection() {
 
         {!loading && experiences.length === 0 && (
           <div className="text-center py-20 text-slate-500 dark:text-slate-400">
-            Aucune expérience ajoutée pour le moment
+            {t.experience.empty}
           </div>
         )}
       </div>

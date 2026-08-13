@@ -10,9 +10,11 @@ import { useToast } from '@/hooks/use-toast';
 import { Loader2, Mail, Send } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { AnimatedSection } from '@/components/animations/MotionComponents';
+import { useLanguage } from '@/components/language-provider';
 
 export default function Contact() {
   const { toast } = useToast();
+  const { t } = useLanguage();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState<ContactMessage>({
     name: '',
@@ -31,8 +33,8 @@ export default function Contact() {
 
     if (!name || !email || !subject || !message) {
       toast({
-        title: "Champs manquants",
-        description: "Merci de remplir tous les champs avant d'envoyer votre message.",
+        title: t.contact.toastMissingTitle,
+        description: t.contact.toastMissingDesc,
         variant: "destructive",
       });
       return;
@@ -50,8 +52,8 @@ export default function Contact() {
       if (dbError) throw dbError;
 
       toast({
-        title: "Message envoyé ✅",
-        description: "Merci pour votre message ! Je vous répondrai dès que possible.",
+        title: t.contact.toastSuccessTitle,
+        description: t.contact.toastSuccessDesc,
       });
       setFormData({ name: '', email: '', subject: '', message: '' });
 
@@ -81,8 +83,8 @@ export default function Contact() {
     } catch (error: any) {
       console.error('Erreur contact:', error?.message ?? error);
       toast({
-        title: "Erreur ❌",
-        description: "Impossible d'enregistrer votre message. Veuillez réessayer dans quelques instants.",
+        title: t.contact.toastErrorTitle,
+        description: t.contact.toastErrorDesc,
         variant: "destructive",
       });
     } finally {
@@ -100,12 +102,12 @@ export default function Contact() {
     <section id="contact" className="py-28 px-4 section-alt section-grid overflow-hidden">
       <div className="max-w-4xl mx-auto">
         <AnimatedSection className="text-center space-y-5 mb-16">
-          <div className="eyebrow-badge mx-auto w-fit">Contact</div>
+          <div className="eyebrow-badge mx-auto w-fit">{t.contact.eyebrow}</div>
           <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-slate-900 dark:text-white">
-            Me Contacter
+            {t.contact.title}
           </h2>
           <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
-            Vous avez un projet en tête ? Discutons-en ensemble
+            {t.contact.subtitle}
           </p>
         </AnimatedSection>
 
@@ -120,9 +122,9 @@ export default function Contact() {
               <div className="w-16 h-16 icon-chip rounded-2xl mx-auto mb-6">
                 <Mail className="h-8 w-8" />
               </div>
-              <CardTitle className="text-3xl font-bold text-slate-900 dark:text-white">Envoyez-moi un message</CardTitle>
+              <CardTitle className="text-3xl font-bold text-slate-900 dark:text-white">{t.contact.cardTitle}</CardTitle>
               <CardDescription className="text-base mt-3 text-slate-600 dark:text-slate-400">
-                Remplissez le formulaire ci-dessous et je vous répondrai dans les plus brefs délais
+                {t.contact.cardDescription}
               </CardDescription>
             </CardHeader>
 
@@ -137,7 +139,7 @@ export default function Contact() {
                 >
                   <div className="space-y-2">
                     <label htmlFor="name" className="text-sm font-medium text-slate-700 dark:text-slate-300">
-                      Nom complet
+                      {t.contact.nameLabel}
                     </label>
                     <Input
                       id="name"
@@ -145,14 +147,14 @@ export default function Contact() {
                       value={formData.name}
                       onChange={handleChange}
                       required
-                      placeholder="Jean Dupont"
+                      placeholder={t.contact.namePlaceholder}
                       className="bg-white border-slate-200 text-slate-900 placeholder:text-slate-400 dark:bg-slate-900 dark:border-slate-700 dark:text-white dark:placeholder:text-slate-500 focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500 transition-all duration-300"
                     />
                   </div>
 
                   <div className="space-y-2">
                     <label htmlFor="email" className="text-sm font-medium text-slate-700 dark:text-slate-300">
-                      Email
+                      {t.contact.emailLabel}
                     </label>
                     <Input
                       id="email"
@@ -161,7 +163,7 @@ export default function Contact() {
                       value={formData.email}
                       onChange={handleChange}
                       required
-                      placeholder="jean@example.com"
+                      placeholder={t.contact.emailPlaceholder}
                       className="bg-white border-slate-200 text-slate-900 placeholder:text-slate-400 dark:bg-slate-900 dark:border-slate-700 dark:text-white dark:placeholder:text-slate-500 focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500 transition-all duration-300"
                     />
                   </div>
@@ -175,7 +177,7 @@ export default function Contact() {
                   transition={{ delay: 0.3 }}
                 >
                   <label htmlFor="subject" className="text-sm font-medium text-slate-700 dark:text-slate-300">
-                    Sujet
+                    {t.contact.subjectLabel}
                   </label>
                   <Input
                     id="subject"
@@ -183,7 +185,7 @@ export default function Contact() {
                     value={formData.subject}
                     onChange={handleChange}
                     required
-                    placeholder="À propos de..."
+                    placeholder={t.contact.subjectPlaceholder}
                     className="bg-white border-slate-200 text-slate-900 placeholder:text-slate-400 dark:bg-slate-900 dark:border-slate-700 dark:text-white dark:placeholder:text-slate-500 focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500 transition-all duration-300"
                   />
                 </motion.div>
@@ -196,7 +198,7 @@ export default function Contact() {
                   transition={{ delay: 0.4 }}
                 >
                   <label htmlFor="message" className="text-sm font-medium text-slate-700 dark:text-slate-300">
-                    Message
+                    {t.contact.messageLabel}
                   </label>
                   <Textarea
                     id="message"
@@ -204,7 +206,7 @@ export default function Contact() {
                     value={formData.message}
                     onChange={handleChange}
                     required
-                    placeholder="Votre message..."
+                    placeholder={t.contact.messagePlaceholder}
                     rows={6}
                     className="bg-white border-slate-200 text-slate-900 placeholder:text-slate-400 dark:bg-slate-900 dark:border-slate-700 dark:text-white dark:placeholder:text-slate-500 resize-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500 transition-all duration-300"
                   />
@@ -226,12 +228,12 @@ export default function Contact() {
                     {loading ? (
                       <>
                         <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                        Envoi en cours...
+                        {t.contact.submitting}
                       </>
                     ) : (
                       <>
                         <Send className="mr-2 h-5 w-5" />
-                        Envoyer le message
+                        {t.contact.submit}
                       </>
                     )}
                   </Button>
