@@ -24,7 +24,7 @@ export function TechIcon({ name, icon, className = 'h-5 w-5' }: TechIconProps) {
   if (failed || (!isUrl && !slug)) {
     return <Code2 className={`${className} text-slate-400 dark:text-slate-500`} />;
   }
-
+ 
   return (
     <img
       src={src}
