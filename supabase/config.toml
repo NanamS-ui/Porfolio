@@ -1,0 +1,10 @@
+# Persists deploy-time settings so they don't need to be passed as CLI flags
+# every time (`--no-verify-jwt` was being forgotten on re-deploys).
+
+[functions.quick-action]
+# This function does its own gatekeeping (hCaptcha verification), and the
+# request already carries the anon key in Authorization for Supabase's
+# standard usage tracking - so the platform-level JWT check (which also
+# blocks the CORS preflight OPTIONS request, since browsers never send
+# Authorization on preflight) is disabled here.
+verify_jwt = false
