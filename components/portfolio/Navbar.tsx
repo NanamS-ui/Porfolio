@@ -6,9 +6,10 @@ import { Code2, Menu, X, ArrowRight, Mail, Download } from 'lucide-react';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { LanguageToggle } from '@/components/language-toggle';
 import { useLanguage } from '@/components/language-provider';
+import { getCvUrl } from '@/lib/cv';
 
 export default function Navbar() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('');
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -122,7 +123,7 @@ export default function Navbar() {
               <LanguageToggle />
               <ThemeToggle />
               <a
-                href="https://nrqjrzgmifkjamiikcxd.supabase.co/storage/v1/object/public/CV_portfolio/CV_Toky.pdf"
+                href={getCvUrl(language)}
                 download
                 className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 dark:border-slate-700 px-3.5 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
               >
@@ -194,7 +195,7 @@ export default function Navbar() {
               ))}
               <div className="grid grid-cols-2 gap-2 pt-1">
                 <motion.a
-                  href="https://nrqjrzgmifkjamiikcxd.supabase.co/storage/v1/object/public/CV_portfolio/CV_Toky.pdf"
+                  href={getCvUrl(language)}
                   download
                   className="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300"
                   initial={{ opacity: 0, x: -20 }}

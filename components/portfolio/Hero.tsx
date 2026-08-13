@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Github, Linkedin, Mail, Download, ChevronDown, ArrowUpRight, MapPin, GraduationCap, CircleCheck } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/components/language-provider';
+import { getCvUrl } from '@/lib/cv';
 
 const easeOut = [0.22, 1, 0.36, 1] as [number, number, number, number];
 
@@ -26,7 +27,7 @@ const socialVariants = {
 };
 
 export default function Hero() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -101,7 +102,7 @@ export default function Hero() {
                   variant="outline"
                   className="border-slate-300 bg-white hover:bg-slate-50 text-slate-800 dark:border-slate-700 dark:bg-slate-900 dark:hover:bg-slate-800 dark:text-slate-100 transition-all duration-300"
                 >
-                  <a href="https://nrqjrzgmifkjamiikcxd.supabase.co/storage/v1/object/public/CV_portfolio/CV_Toky.pdf" download>
+                  <a href={getCvUrl(language)} download>
                     <Download className="mr-2 h-5 w-5" />
                     {t.hero.ctaSecondary}
                   </a>
