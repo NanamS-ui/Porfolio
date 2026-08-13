@@ -3,10 +3,10 @@
 // the message into `contact_messages` using the service role key.
 //
 // Deploy with:
-//   supabase functions deploy submit-contact
+//   supabase functions deploy quick-action --no-verify-jwt
 //
 // Required secrets (set with `supabase secrets set NAME=value`, or in the
-// Supabase dashboard under Edge Functions -> submit-contact -> Secrets):
+// Supabase dashboard under Edge Functions -> quick-action -> Secrets):
 //   HCAPTCHA_SECRET_KEY        - secret key from your hCaptcha site
 //   SUPABASE_URL                - already available by default on Supabase
 //   SUPABASE_SERVICE_ROLE_KEY   - already available by default on Supabase

@@ -73,7 +73,7 @@ export default function Contact() {
       const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
       // Étape 1 (critique) : enregistrer le message.
-      // On passe par l'Edge Function submit-contact, qui vérifie le token hCaptcha
+      // On passe par l'Edge Function quick-action, qui vérifie le token hCaptcha
       // côté serveur avant d'insérer (RLS interdit désormais l'insertion directe).
       // Si la fonction n'est pas encore déployée (404), on retombe sur l'insertion
       // directe pour ne jamais perdre un message pendant la mise en place du captcha -
@@ -83,7 +83,7 @@ export default function Contact() {
 
       if (supabaseUrl && supabaseAnonKey) {
         try {
-          const response = await fetch(`${supabaseUrl}/functions/v1/submit-contact`, {
+          const response = await fetch(`${supabaseUrl}/functions/v1/quick-action`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -101,7 +101,7 @@ export default function Contact() {
           }
         } catch (fnError) {
           if (handledByFunction) throw fnError;
-          console.warn('submit-contact indisponible, insertion directe en secours.', fnError);
+          console.warn('quick-action indisponible, insertion directe en secours.', fnError);
         }
       }
 
