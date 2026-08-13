@@ -13,6 +13,7 @@ export interface Dictionary {
     closeMenu: string;
     openMenu: string;
     backToTop: string;
+    skipToContent: string;
   };
   theme: {
     toLight: string;
@@ -92,6 +93,8 @@ export interface Dictionary {
     toastSuccessDesc: string;
     toastErrorTitle: string;
     toastErrorDesc: string;
+    toastCaptchaTitle: string;
+    toastCaptchaDesc: string;
   };
   footer: {
     tagline: string;
@@ -101,6 +104,11 @@ export interface Dictionary {
     availableForProjects: string;
     rights: string;
     madeWith: string;
+  };
+  notFound: {
+    title: string;
+    description: string;
+    backHome: string;
   };
 }
 
@@ -118,6 +126,7 @@ const dictionaries: Record<Language, Dictionary> = {
       closeMenu: 'Fermer le menu',
       openMenu: 'Ouvrir le menu',
       backToTop: 'Retour en haut de page',
+      skipToContent: 'Aller au contenu principal',
     },
     theme: {
       toLight: 'Activer le mode clair',
@@ -203,6 +212,8 @@ const dictionaries: Record<Language, Dictionary> = {
       toastSuccessDesc: 'Merci pour votre message ! Je vous répondrai dès que possible.',
       toastErrorTitle: 'Erreur ❌',
       toastErrorDesc: "Impossible d'enregistrer votre message. Veuillez réessayer dans quelques instants.",
+      toastCaptchaTitle: 'Vérification requise',
+      toastCaptchaDesc: "Merci de compléter la vérification anti-robot avant d'envoyer votre message.",
     },
     footer: {
       tagline: "Développeur Full Stack Junior passionné par la création d'expériences web exceptionnelles. Motivé pour apprendre, progresser et contribuer à des projets ambitieux.",
@@ -212,6 +223,11 @@ const dictionaries: Record<Language, Dictionary> = {
       availableForProjects: 'Disponible pour projets',
       rights: 'Tous droits réservés.',
       madeWith: 'Conçu et développé avec Next.js & Tailwind CSS',
+    },
+    notFound: {
+      title: 'Page introuvable',
+      description: "Le lien suivi est peut-être cassé, ou la page a été déplacée ou supprimée.",
+      backHome: "Retour à l'accueil",
     },
   },
   en: {
@@ -227,6 +243,7 @@ const dictionaries: Record<Language, Dictionary> = {
       closeMenu: 'Close menu',
       openMenu: 'Open menu',
       backToTop: 'Back to top',
+      skipToContent: 'Skip to main content',
     },
     theme: {
       toLight: 'Switch to light mode',
@@ -312,6 +329,8 @@ const dictionaries: Record<Language, Dictionary> = {
       toastSuccessDesc: "Thanks for your message! I'll get back to you as soon as possible.",
       toastErrorTitle: 'Error ❌',
       toastErrorDesc: 'Could not save your message. Please try again in a moment.',
+      toastCaptchaTitle: 'Verification required',
+      toastCaptchaDesc: 'Please complete the anti-robot check before sending your message.',
     },
     footer: {
       tagline: 'Junior Full Stack Developer passionate about building exceptional web experiences. Motivated to learn, grow and contribute to ambitious projects.',
@@ -321,6 +340,11 @@ const dictionaries: Record<Language, Dictionary> = {
       availableForProjects: 'Available for projects',
       rights: 'All rights reserved.',
       madeWith: 'Designed and built with Next.js & Tailwind CSS',
+    },
+    notFound: {
+      title: 'Page not found',
+      description: 'The link you followed may be broken, or the page may have been moved or removed.',
+      backHome: 'Back to home',
     },
   },
 };

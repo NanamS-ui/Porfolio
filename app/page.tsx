@@ -7,10 +7,12 @@ import Contact from '@/components/portfolio/Contact';
 import Footer from '@/components/portfolio/Footer';
 import Navbar from '@/components/portfolio/Navbar';
 import { Toaster } from '@/components/ui/toaster';
+import { SkipLink } from '@/components/skip-link';
 
 export default function Home() {
     return (
         <main className="min-h-screen overflow-x-hidden section-grid">
+            <SkipLink />
             <Navbar />
             <Hero />
             <Projects />

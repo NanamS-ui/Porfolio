@@ -1,6 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import HCaptcha from '@hcaptcha/react-hcaptcha';
+import { useTheme } from 'next-themes';
 import { supabase, type ContactMessage } from '@/lib/supabase';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -12,9 +14,13 @@ import { motion } from 'framer-motion';
 import { AnimatedSection } from '@/components/animations/MotionComponents';
 import { useLanguage } from '@/components/language-provider';
 
+const hcaptchaSiteKey = process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY;
+
 export default function Contact() {
   const { toast } = useToast();
   const { t } = useLanguage();
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState<ContactMessage>({
     name: '',
@@ -22,9 +28,20 @@ export default function Contact() {
     subject: '',
     message: '',
   });
+  // Honeypot: invisible to real visitors, but simple bots fill in every field.
+  // A non-empty value here means the submission is spam, so we drop it silently.
+  const [honeypot, setHoneypot] = useState('');
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const captchaRef = useRef<HCaptcha>(null);
+
+  useEffect(() => setMounted(true), []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (honeypot.trim()) {
+      return;
+    }
 
     const name = formData.name.trim();
     const email = formData.email.trim();
@@ -40,16 +57,61 @@ export default function Contact() {
       return;
     }
 
+    if (hcaptchaSiteKey && !captchaToken) {
+      toast({
+        title: t.contact.toastCaptchaTitle,
+        description: t.contact.toastCaptchaDesc,
+        variant: "destructive",
+      });
+      return;
+    }
+
     setLoading(true);
 
     try {
-      // Étape 1 (critique) : enregistrer le message dans la base de données.
-      // Tant que cette étape réussit, le message est bien reçu même si la notification email échoue.
-      const { error: dbError } = await supabase
-        .from('contact_messages')
-        .insert([{ name, email, subject, message }]);
+      const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+      const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-      if (dbError) throw dbError;
+      // Étape 1 (critique) : enregistrer le message.
+      // On passe par l'Edge Function submit-contact, qui vérifie le token hCaptcha
+      // côté serveur avant d'insérer (RLS interdit désormais l'insertion directe).
+      // Si la fonction n'est pas encore déployée (404), on retombe sur l'insertion
+      // directe pour ne jamais perdre un message pendant la mise en place du captcha -
+      // ce filet de secours cesse de fonctionner de lui-même dès que la policy RLS
+      // d'insertion anonyme est retirée (voir la migration correspondante).
+      let handledByFunction = false;
+
+      if (supabaseUrl && supabaseAnonKey) {
+        try {
+          const response = await fetch(`${supabaseUrl}/functions/v1/submit-contact`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${supabaseAnonKey}`,
+            },
+            body: JSON.stringify({ name, email, subject, message, captchaToken }),
+          });
+
+          if (response.status !== 404) {
+            handledByFunction = true;
+            const result = await response.json().catch(() => ({}));
+            if (!response.ok) {
+              throw new Error(result.error || 'Vérification anti-robot échouée.');
+            }
+          }
+        } catch (fnError) {
+          if (handledByFunction) throw fnError;
+          console.warn('submit-contact indisponible, insertion directe en secours.', fnError);
+        }
+      }
+
+      if (!handledByFunction) {
+        const { error: dbError } = await supabase
+          .from('contact_messages')
+          .insert([{ name, email, subject, message }]);
+
+        if (dbError) throw dbError;
+      }
 
       toast({
         title: t.contact.toastSuccessTitle,
@@ -59,9 +121,6 @@ export default function Contact() {
 
       // Étape 2 (best-effort) : notifier par email via la fonction Supabase.
       // Un échec ici ne doit pas faire croire au visiteur que son message n'est pas arrivé.
-      const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-      const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
       if (supabaseUrl && supabaseAnonKey) {
         try {
           const response = await fetch(`${supabaseUrl}/functions/v1/send-contact-email`, {
@@ -89,6 +148,8 @@ export default function Contact() {
       });
     } finally {
       setLoading(false);
+      setCaptchaToken(null);
+      captchaRef.current?.resetCaptcha();
     }
   };
 
@@ -130,6 +191,20 @@ export default function Contact() {
 
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-6">
+                {/* Honeypot field: hidden from sighted/keyboard users, but visible to simple bots that fill in every input. */}
+                <div className="absolute left-0 top-0 h-0 w-0 overflow-hidden opacity-0" aria-hidden="true">
+                  <label htmlFor="company">Company</label>
+                  <input
+                    type="text"
+                    id="company"
+                    name="company"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    value={honeypot}
+                    onChange={(e) => setHoneypot(e.target.value)}
+                  />
+                </div>
+
                 <motion.div
                   className="grid grid-cols-1 md:grid-cols-2 gap-6"
                   initial={{ opacity: 0, y: 20 }}
@@ -211,6 +286,24 @@ export default function Contact() {
                     className="bg-white border-slate-200 text-slate-900 placeholder:text-slate-400 dark:bg-slate-900 dark:border-slate-700 dark:text-white dark:placeholder:text-slate-500 resize-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500 transition-all duration-300"
                   />
                 </motion.div>
+
+                {hcaptchaSiteKey && mounted && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.45 }}
+                    className="flex justify-center"
+                  >
+                    <HCaptcha
+                      ref={captchaRef}
+                      sitekey={hcaptchaSiteKey}
+                      onVerify={setCaptchaToken}
+                      onExpire={() => setCaptchaToken(null)}
+                      theme={resolvedTheme === 'dark' ? 'dark' : 'light'}
+                    />
+                  </motion.div>
+                )}
 
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}

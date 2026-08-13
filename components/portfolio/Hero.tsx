@@ -45,7 +45,11 @@ export default function Hero() {
   ];
 
   return (
-    <section className="min-h-screen flex items-center relative px-4 pt-28 pb-16 md:pt-32 md:pb-20 overflow-hidden section-grid">
+    <section
+      id="main-content"
+      tabIndex={-1}
+      className="min-h-screen flex items-center relative px-4 pt-28 pb-16 md:pt-32 md:pb-20 overflow-hidden section-grid outline-none"
+    >
       {/* Lightweight CSS-only background wash - no WebGL/canvas */}
       <div className="absolute inset-0 -z-20 overflow-hidden">
         <div className="absolute top-[-8%] right-[-6%] w-[34rem] h-[34rem] bg-blue-100/70 dark:bg-blue-500/10 rounded-full blur-[120px] animate-drift" />
@@ -149,6 +153,8 @@ export default function Hero() {
               <img
                 src={publicUrl}
                 alt={t.hero.photoAlt}
+                fetchPriority="high"
+                decoding="async"
                 className="photo-blend absolute inset-0 w-full h-full object-cover object-top"
               />
             </motion.div>

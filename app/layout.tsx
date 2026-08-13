@@ -62,6 +62,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fr" suppressHydrationWarning>
+      <head>
+        {/* Warms up the connection to the tech-icon CDN used by the Skills section,
+            so the many small icon requests don't each pay a fresh DNS/TLS cost. */}
+        <link rel="preconnect" href="https://cdn.simpleicons.org" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://cdn.simpleicons.org" />
+      </head>
       <body className={inter.className}>
         <script
           type="application/ld+json"
