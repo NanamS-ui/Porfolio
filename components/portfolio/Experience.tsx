@@ -4,11 +4,37 @@ import { useState, useEffect } from 'react';
 import { supabase, type Experience } from '@/lib/supabase';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Loader2, MapPin, Calendar } from 'lucide-react';
+import { Skeleton } from '@/components/ui/skeleton';
+import { MapPin, Calendar } from 'lucide-react';
 import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
 import { motion } from 'framer-motion';
 import { AnimatedSection } from '@/components/animations/MotionComponents';
+
+function ExperienceCardSkeleton() {
+  return (
+    <Card className="md:ml-24 surface-card">
+      <CardHeader>
+        <div className="flex flex-wrap gap-3 items-start justify-between mb-2">
+          <div className="space-y-2">
+            <Skeleton className="h-6 w-48" />
+            <Skeleton className="h-5 w-32" />
+          </div>
+        </div>
+        <Skeleton className="h-4 w-56" />
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <Skeleton className="h-4 w-full" />
+        <Skeleton className="h-4 w-5/6" />
+        <div className="flex flex-wrap gap-2">
+          <Skeleton className="h-5 w-16 rounded-full" />
+          <Skeleton className="h-5 w-14 rounded-full" />
+          <Skeleton className="h-5 w-20 rounded-full" />
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
 
 export default function ExperienceSection() {
   const [experiences, setExperiences] = useState<Experience[]>([]);
@@ -40,27 +66,24 @@ export default function ExperienceSection() {
       <div className="max-w-5xl mx-auto">
         <AnimatedSection className="text-center space-y-5 mb-16">
           <div className="eyebrow-badge mx-auto w-fit">Parcours</div>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-slate-900">
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-slate-900 dark:text-white">
             Expérience
           </h2>
-          <p className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
             Mon parcours professionnel et les projets sur lesquels j'ai eu la chance de travailler
           </p>
         </AnimatedSection>
 
         {loading ? (
-          <div className="flex justify-center items-center py-20">
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-            >
-              <Loader2 className="h-10 w-10 text-blue-600" />
-            </motion.div>
+          <div className="space-y-10">
+            {Array.from({ length: 3 }).map((_, i) => (
+              <ExperienceCardSkeleton key={i} />
+            ))}
           </div>
         ) : (
           <div className="relative">
             <motion.div
-              className="absolute left-8 top-0 bottom-0 w-0.5 bg-slate-200 hidden md:block rounded-full"
+              className="absolute left-8 top-0 bottom-0 w-0.5 bg-slate-200 dark:bg-slate-800 hidden md:block rounded-full"
               initial={{ scaleY: 0, originY: 0 }}
               whileInView={{ scaleY: 1 }}
               viewport={{ once: true }}
@@ -82,7 +105,7 @@ export default function ExperienceSection() {
                   }}
                 >
                   <motion.div
-                    className="hidden md:flex absolute left-8 top-8 w-4 h-4 items-center justify-center bg-blue-600 rounded-full -translate-x-[7px] ring-4 ring-white shadow-sm"
+                    className="hidden md:flex absolute left-8 top-8 w-4 h-4 items-center justify-center bg-blue-600 dark:bg-blue-500 rounded-full -translate-x-[7px] ring-4 ring-white dark:ring-slate-950 shadow-sm"
                     initial={{ scale: 0 }}
                     whileInView={{ scale: 1 }}
                     viewport={{ once: true }}
@@ -97,10 +120,10 @@ export default function ExperienceSection() {
                       <CardHeader>
                         <div className="flex flex-wrap gap-3 items-start justify-between mb-2">
                           <div className="space-y-1">
-                            <CardTitle className="text-2xl text-slate-900">
+                            <CardTitle className="text-2xl text-slate-900 dark:text-white">
                               {exp.position}
                             </CardTitle>
-                            <CardDescription className="text-lg font-medium text-blue-700">
+                            <CardDescription className="text-lg font-medium text-blue-700 dark:text-blue-400">
                               {exp.company}
                             </CardDescription>
                           </div>
@@ -110,23 +133,23 @@ export default function ExperienceSection() {
                               animate={{ scale: 1 }}
                               transition={{ type: 'spring', delay: 0.5 }}
                             >
-                              <Badge className="bg-emerald-100 text-emerald-700 border-0">
+                              <Badge className="bg-emerald-100 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400 border-0">
                                 En cours
                               </Badge>
                             </motion.div>
                           )}
                         </div>
 
-                        <div className="flex flex-wrap gap-4 text-sm text-slate-500">
+                        <div className="flex flex-wrap gap-4 text-sm text-slate-500 dark:text-slate-400">
                           <div className="flex items-center gap-1.5">
-                            <Calendar className="h-4 w-4 text-slate-400" />
+                            <Calendar className="h-4 w-4 text-slate-400 dark:text-slate-500" />
                             <span>
                               {formatDate(exp.start_date)} - {exp.end_date ? formatDate(exp.end_date) : 'Présent'}
                             </span>
                           </div>
                           {exp.location && (
                             <div className="flex items-center gap-1.5">
-                              <MapPin className="h-4 w-4 text-slate-400" />
+                              <MapPin className="h-4 w-4 text-slate-400 dark:text-slate-500" />
                               <span>{exp.location}</span>
                             </div>
                           )}
@@ -134,7 +157,7 @@ export default function ExperienceSection() {
                       </CardHeader>
 
                       <CardContent className="space-y-4">
-                        <p className="text-slate-600 leading-relaxed">
+                        <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
                           {exp.description}
                         </p>
 
@@ -147,7 +170,7 @@ export default function ExperienceSection() {
                               viewport={{ once: true }}
                               transition={{ delay: i * 0.05 + 0.3 }}
                             >
-                              <Badge variant="secondary" className="text-xs bg-slate-100 text-slate-700 border border-slate-200 font-normal">
+                              <Badge variant="secondary" className="text-xs bg-slate-100 text-slate-700 border border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700 font-normal">
                                 {tech}
                               </Badge>
                             </motion.div>
@@ -163,7 +186,7 @@ export default function ExperienceSection() {
         )}
 
         {!loading && experiences.length === 0 && (
-          <div className="text-center py-20 text-slate-500">
+          <div className="text-center py-20 text-slate-500 dark:text-slate-400">
             Aucune expérience ajoutée pour le moment
           </div>
         )}

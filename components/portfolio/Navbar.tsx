@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Code2, Menu, X, ArrowRight, Mail, Download } from 'lucide-react';
+import { ThemeToggle } from '@/components/theme-toggle';
 
 const navLinks = [
   { href: 'projects', label: 'Projets' },
@@ -64,7 +65,9 @@ export default function Navbar() {
     <>
       <motion.header
         className={`fixed inset-x-0 top-0 z-50 border-b transition-all duration-300 ${
-          scrolled ? 'bg-white/90 backdrop-blur-md border-slate-200 shadow-sm' : 'bg-white/70 border-transparent'
+          scrolled
+            ? 'bg-white/90 dark:bg-slate-950/90 backdrop-blur-md border-slate-200 dark:border-slate-800 shadow-sm'
+            : 'bg-white/70 dark:bg-slate-950/70 border-transparent'
         }`}
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -77,12 +80,12 @@ export default function Navbar() {
               className="flex items-center gap-2.5"
               aria-label="Retour en haut de page"
             >
-              <span className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-blue-600 shadow-sm shadow-blue-600/25">
-                <Code2 className="h-4.5 w-4.5 text-white" />
+              <span className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-blue-600 dark:bg-blue-500 shadow-sm shadow-blue-600/25">
+                <Code2 className="h-5 w-5 text-white" />
               </span>
               <span className="hidden sm:block text-left leading-tight">
-                <span className="block text-sm font-semibold text-slate-900">Toky Ralison</span>
-                <span className="block text-[10px] uppercase tracking-[0.2em] text-slate-500">Développeur Junior</span>
+                <span className="block text-sm font-semibold text-slate-900 dark:text-white">Toky Ralison</span>
+                <span className="block text-[10px] uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Développeur Junior</span>
               </span>
             </button>
 
@@ -92,14 +95,16 @@ export default function Navbar() {
                   <button
                     onClick={() => scrollTo(link.href)}
                     className={`relative rounded-lg px-3.5 py-2 text-sm font-medium transition-colors ${
-                      activeSection === link.href ? 'text-blue-700' : 'text-slate-600 hover:text-slate-900'
+                      activeSection === link.href
+                        ? 'text-blue-700 dark:text-blue-400'
+                        : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
                     }`}
                     aria-current={activeSection === link.href ? 'page' : undefined}
                   >
                     {activeSection === link.href && (
                       <motion.span
                         layoutId="navIndicator"
-                        className="absolute inset-0 rounded-lg bg-blue-50"
+                        className="absolute inset-0 rounded-lg bg-blue-50 dark:bg-blue-500/10"
                         transition={{ type: 'spring', stiffness: 280, damping: 28 }}
                       />
                     )}
@@ -109,32 +114,36 @@ export default function Navbar() {
               ))}
             </ul>
 
-            <div className="ml-auto hidden md:flex items-center gap-2">
+            <div className="ml-auto hidden lg:flex items-center gap-2">
+              <ThemeToggle />
               <a
                 href="https://nrqjrzgmifkjamiikcxd.supabase.co/storage/v1/object/public/CV_portfolio/CV_Toky.pdf"
                 download
-                className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 px-3.5 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors"
+                className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 dark:border-slate-700 px-3.5 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
               >
                 <Download className="h-4 w-4" />
                 CV
               </a>
               <button
                 onClick={() => scrollTo('contact')}
-                className="inline-flex items-center gap-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 px-4 py-2 text-sm font-medium text-white shadow-sm shadow-blue-600/25 transition-colors"
+                className="inline-flex items-center gap-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-400 px-4 py-2 text-sm font-medium text-white shadow-sm shadow-blue-600/25 transition-colors"
               >
                 Contact
                 <Mail className="h-4 w-4" />
               </button>
             </div>
 
-            <button
-              className="ml-auto lg:hidden rounded-lg border border-slate-200 p-2 text-slate-700"
-              onClick={() => setMobileOpen(!mobileOpen)}
-              aria-label={mobileOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
-              aria-expanded={mobileOpen}
-            >
-              {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-            </button>
+            <div className="ml-auto flex items-center gap-2 lg:hidden">
+              <ThemeToggle />
+              <button
+                className="rounded-lg border border-slate-200 dark:border-slate-700 p-2 text-slate-700 dark:text-slate-300"
+                onClick={() => setMobileOpen(!mobileOpen)}
+                aria-label={mobileOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
+                aria-expanded={mobileOpen}
+              >
+                {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              </button>
+            </div>
           </div>
         </div>
       </motion.header>
@@ -150,15 +159,15 @@ export default function Navbar() {
           >
             <div className="absolute inset-0 bg-slate-900/30 backdrop-blur-sm" onClick={() => setMobileOpen(false)} />
             <motion.div
-              className="absolute top-16 left-3 right-3 rounded-2xl border border-slate-200 bg-white p-5 space-y-3 shadow-xl"
+              className="absolute top-16 left-3 right-3 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 space-y-3 shadow-xl"
               initial={{ opacity: 0, y: -20, scale: 0.97 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -20, scale: 0.97 }}
               transition={{ duration: 0.25 }}
             >
-              <div className="px-4 py-3 rounded-xl bg-slate-50 border border-slate-100">
-                <p className="text-slate-900 font-semibold text-sm">Toky Ralison</p>
-                <p className="text-slate-500 text-xs">Développeur Full Stack Junior</p>
+              <div className="px-4 py-3 rounded-xl bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-slate-800">
+                <p className="text-slate-900 dark:text-white font-semibold text-sm">Toky Ralison</p>
+                <p className="text-slate-500 dark:text-slate-400 text-xs">Développeur Full Stack Junior</p>
               </div>
               {navLinks.map((link, i) => (
                 <motion.button
@@ -166,8 +175,8 @@ export default function Navbar() {
                   onClick={() => scrollTo(link.href)}
                   className={`w-full text-left px-4 py-3 rounded-xl transition-colors text-sm font-medium ${
                     activeSection === link.href
-                      ? 'text-blue-700 bg-blue-50'
-                      : 'text-slate-700 hover:bg-slate-50'
+                      ? 'text-blue-700 bg-blue-50 dark:text-blue-400 dark:bg-blue-500/10'
+                      : 'text-slate-700 hover:bg-slate-50 dark:text-slate-300 dark:hover:bg-slate-800'
                   }`}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -181,7 +190,7 @@ export default function Navbar() {
                 <motion.a
                   href="https://nrqjrzgmifkjamiikcxd.supabase.co/storage/v1/object/public/CV_portfolio/CV_Toky.pdf"
                   download
-                  className="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl border border-slate-200 text-slate-700"
+                  className="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300"
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.26 }}
@@ -191,7 +200,7 @@ export default function Navbar() {
                 </motion.a>
                 <motion.button
                   onClick={() => scrollTo('contact')}
-                  className="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-blue-600 text-white text-sm font-medium"
+                  className="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-blue-600 dark:bg-blue-500 text-white text-sm font-medium"
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.3 }}

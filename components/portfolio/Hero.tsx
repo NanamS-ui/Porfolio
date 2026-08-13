@@ -25,9 +25,9 @@ const socialVariants = {
 };
 
 const statTiles = [
-  { icon: CircleCheck, label: 'Disponibilité', value: 'Ouvert aux opportunités', accent: 'text-emerald-600 bg-emerald-50' },
-  { icon: GraduationCap, label: 'Profil', value: 'Développeur Full Stack Junior', accent: 'text-blue-600 bg-blue-50' },
-  { icon: MapPin, label: 'Localisation', value: 'Antananarivo, Madagascar', accent: 'text-slate-600 bg-slate-100' },
+  { icon: CircleCheck, label: 'Disponibilité', value: 'Ouvert aux opportunités', accent: 'text-emerald-600 bg-emerald-50 dark:text-emerald-400 dark:bg-emerald-500/10' },
+  { icon: GraduationCap, label: 'Profil', value: 'Développeur Full Stack Junior', accent: 'text-blue-600 bg-blue-50 dark:text-blue-400 dark:bg-blue-500/10' },
+  { icon: MapPin, label: 'Localisation', value: 'Antananarivo, Madagascar', accent: 'text-slate-600 bg-slate-100 dark:text-slate-300 dark:bg-slate-800' },
 ];
 
 export default function Hero() {
@@ -45,8 +45,8 @@ export default function Hero() {
     <section className="min-h-screen flex items-center relative px-4 pt-28 pb-16 md:pt-32 md:pb-20 overflow-hidden section-grid">
       {/* Lightweight CSS-only background wash - no WebGL/canvas */}
       <div className="absolute inset-0 -z-20 overflow-hidden">
-        <div className="absolute top-[-8%] right-[-6%] w-[34rem] h-[34rem] bg-blue-100/70 rounded-full blur-[120px] animate-drift" />
-        <div className="absolute bottom-[-12%] left-[-8%] w-[28rem] h-[28rem] bg-slate-200/60 rounded-full blur-[120px] animate-float" />
+        <div className="absolute top-[-8%] right-[-6%] w-[34rem] h-[34rem] bg-blue-100/70 dark:bg-blue-500/10 rounded-full blur-[120px] animate-drift" />
+        <div className="absolute bottom-[-12%] left-[-8%] w-[28rem] h-[28rem] bg-slate-200/60 dark:bg-slate-700/20 rounded-full blur-[120px] animate-float" />
       </div>
 
       <motion.div
@@ -63,7 +63,7 @@ export default function Hero() {
             </motion.div>
 
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight">
-              <motion.span className="block text-slate-900" variants={itemVariants}>
+              <motion.span className="block text-slate-900 dark:text-white" variants={itemVariants}>
                 Toky Ralison
               </motion.span>
               <motion.span className="block gradient-text" variants={itemVariants}>
@@ -71,7 +71,7 @@ export default function Hero() {
               </motion.span>
             </h1>
 
-            <motion.p className="text-base md:text-lg text-slate-600 max-w-2xl leading-relaxed" variants={itemVariants}>
+            <motion.p className="text-base md:text-lg text-slate-600 dark:text-slate-400 max-w-2xl leading-relaxed" variants={itemVariants}>
               Je conçois des applications web rapides, élégantes et robustes, avec une forte exigence UX
               et une architecture propre. Toujours motivé à apprendre et à progresser.
             </motion.p>
@@ -93,7 +93,7 @@ export default function Hero() {
                   asChild
                   size="lg"
                   variant="outline"
-                  className="border-slate-300 bg-white hover:bg-slate-50 text-slate-800 transition-all duration-300"
+                  className="border-slate-300 bg-white hover:bg-slate-50 text-slate-800 dark:border-slate-700 dark:bg-slate-900 dark:hover:bg-slate-800 dark:text-slate-100 transition-all duration-300"
                 >
                   <a href="https://nrqjrzgmifkjamiikcxd.supabase.co/storage/v1/object/public/CV_portfolio/CV_Toky.pdf" download>
                     <Download className="mr-2 h-5 w-5" />
@@ -104,7 +104,7 @@ export default function Hero() {
 
               <motion.button
                 onClick={() => scrollToSection('projects')}
-                className="inline-flex items-center gap-2 px-4 py-3 rounded-xl text-slate-700 hover:text-blue-700 font-medium transition-colors"
+                className="inline-flex items-center gap-2 px-4 py-3 rounded-xl text-slate-700 hover:text-blue-700 dark:text-slate-300 dark:hover:text-blue-400 font-medium transition-colors"
                 whileHover={{ x: 2 }}
                 whileTap={{ scale: 0.97 }}
               >
@@ -124,13 +124,13 @@ export default function Hero() {
                   href={social.href}
                   target={social.href.startsWith('mailto:') ? '_self' : '_blank'}
                   rel="noopener noreferrer"
-                  className="p-3 rounded-xl border border-slate-200 bg-white hover:border-blue-300 hover:text-blue-600 hover:shadow-sm transition-all duration-300"
+                  className="p-3 rounded-xl border border-slate-200 bg-white hover:border-blue-300 hover:text-blue-600 hover:shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:hover:border-blue-500/50 transition-all duration-300"
                   variants={socialVariants}
                   whileHover={{ scale: 1.08, y: -2 }}
                   whileTap={{ scale: 0.94 }}
                   aria-label={social.label}
                 >
-                  <social.icon className="h-5 w-5 text-slate-600" />
+                  <social.icon className="h-5 w-5 text-slate-600 dark:text-slate-300" />
                 </motion.a>
               ))}
             </motion.div>
@@ -153,7 +153,7 @@ export default function Hero() {
                   alt="Photo de Toky Ralison"
                   width={480}
                   height={480}
-                  className="block w-full h-full rounded-2xl object-cover object-center ring-4 ring-blue-50 shadow-md"
+                  className="block w-full h-full rounded-2xl object-cover object-center ring-4 ring-blue-50 dark:ring-blue-500/10 shadow-md"
                 />
               </motion.div>
             </motion.div>
@@ -169,11 +169,11 @@ export default function Hero() {
                   whileHover={{ y: -2 }}
                 >
                   <span className={`inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl ${tile.accent}`}>
-                    <tile.icon className="h-4.5 w-4.5" />
+                    <tile.icon className="h-5 w-5" />
                   </span>
                   <div className="min-w-0">
-                    <p className="text-xs uppercase tracking-wide text-slate-400">{tile.label}</p>
-                    <p className="text-sm font-medium text-slate-800 truncate">{tile.value}</p>
+                    <p className="text-xs uppercase tracking-wide text-slate-400 dark:text-slate-500">{tile.label}</p>
+                    <p className="text-sm font-medium text-slate-800 dark:text-slate-100 truncate">{tile.value}</p>
                   </div>
                 </motion.div>
               ))}
@@ -190,7 +190,7 @@ export default function Hero() {
         >
           <motion.button
             onClick={() => scrollToSection('projects')}
-            className="flex flex-col items-center gap-2 text-slate-400 hover:text-blue-600 transition-colors"
+            className="flex flex-col items-center gap-2 text-slate-400 hover:text-blue-600 dark:text-slate-500 dark:hover:text-blue-400 transition-colors"
             animate={{ y: [0, 8, 0] }}
             transition={{ duration: 2, repeat: Infinity }}
           >

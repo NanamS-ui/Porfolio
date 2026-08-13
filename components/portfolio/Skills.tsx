@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { supabase, type Skill } from '@/lib/supabase';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Loader2 } from 'lucide-react';
+import { Skeleton } from '@/components/ui/skeleton';
 import { motion } from 'framer-motion';
 import { AnimatedSection, StaggerContainer, StaggerItem } from '@/components/animations/MotionComponents';
 
@@ -28,14 +28,38 @@ function AnimatedProgressBar({ value, delay = 0 }: { value: number; delay?: numb
   }, [value, delay]);
 
   return (
-    <div ref={ref} className="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+    <div ref={ref} className="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-2 overflow-hidden">
       <motion.div
-        className="h-full bg-blue-600 rounded-full"
+        className="h-full bg-blue-600 dark:bg-blue-500 rounded-full"
         initial={{ width: 0 }}
         animate={{ width: `${width}%` }}
         transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
       />
     </div>
+  );
+}
+
+function SkillCardSkeleton() {
+  return (
+    <Card className="surface-card h-full">
+      <CardHeader className="pb-6">
+        <div className="flex items-center gap-3">
+          <Skeleton className="w-10 h-10 rounded-xl" />
+          <Skeleton className="h-6 w-32" />
+        </div>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        {Array.from({ length: 4 }).map((_, i) => (
+          <div key={i} className="space-y-2">
+            <div className="flex justify-between items-center">
+              <Skeleton className="h-4 w-24" />
+              <Skeleton className="h-4 w-8" />
+            </div>
+            <Skeleton className="h-2 w-full rounded-full" />
+          </div>
+        ))}
+      </CardContent>
+    </Card>
   );
 }
 
@@ -92,22 +116,19 @@ export default function Skills() {
       <div className="max-w-7xl mx-auto">
         <AnimatedSection className="text-center space-y-5 mb-16">
           <div className="eyebrow-badge mx-auto w-fit">Expertise</div>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-slate-900">
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-slate-900 dark:text-white">
             Compétences
           </h2>
-          <p className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
             Technologies et outils que je maîtrise pour créer des applications performantes et innovantes
           </p>
         </AnimatedSection>
 
         {loading ? (
-          <div className="flex justify-center items-center py-20">
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-            >
-              <Loader2 className="h-10 w-10 text-blue-600" />
-            </motion.div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {Array.from({ length: 4 }).map((_, i) => (
+              <SkillCardSkeleton key={i} />
+            ))}
           </div>
         ) : (
           <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -119,7 +140,7 @@ export default function Skills() {
                 >
                   <Card className="surface-card transition-shadow duration-300 hover:shadow-lg h-full">
                     <CardHeader className="pb-6">
-                      <CardTitle className="text-xl font-bold text-slate-900 flex items-center gap-3">
+                      <CardTitle className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-3">
                         <span className="icon-chip w-10 h-10 text-lg">
                           {categoryIcons[category] || (categoryNames[category] || category).charAt(0)}
                         </span>
@@ -137,8 +158,8 @@ export default function Skills() {
                           transition={{ delay: skillIndex * 0.05, duration: 0.4 }}
                         >
                           <div className="flex justify-between items-center">
-                            <span className="font-medium text-slate-700">{skill.name}</span>
-                            <Badge variant="secondary" className="text-xs bg-slate-100 text-slate-600 border border-slate-200 font-normal">
+                            <span className="font-medium text-slate-700 dark:text-slate-300">{skill.name}</span>
+                            <Badge variant="secondary" className="text-xs bg-slate-100 text-slate-600 border border-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:border-slate-700 font-normal">
                               {skill.proficiency}%
                             </Badge>
                           </div>
@@ -157,7 +178,7 @@ export default function Skills() {
         )}
 
         {!loading && skills.length === 0 && (
-          <div className="text-center py-20 text-slate-500">
+          <div className="text-center py-20 text-slate-500 dark:text-slate-400">
             Aucune compétence ajoutée pour le moment
           </div>
         )}

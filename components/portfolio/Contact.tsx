@@ -101,10 +101,10 @@ export default function Contact() {
       <div className="max-w-4xl mx-auto">
         <AnimatedSection className="text-center space-y-5 mb-16">
           <div className="eyebrow-badge mx-auto w-fit">Contact</div>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-slate-900">
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-slate-900 dark:text-white">
             Me Contacter
           </h2>
-          <p className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
             Vous avez un projet en tête ? Discutons-en ensemble
           </p>
         </AnimatedSection>
@@ -120,8 +120,8 @@ export default function Contact() {
               <div className="w-16 h-16 icon-chip rounded-2xl mx-auto mb-6">
                 <Mail className="h-8 w-8" />
               </div>
-              <CardTitle className="text-3xl font-bold text-slate-900">Envoyez-moi un message</CardTitle>
-              <CardDescription className="text-base mt-3 text-slate-600">
+              <CardTitle className="text-3xl font-bold text-slate-900 dark:text-white">Envoyez-moi un message</CardTitle>
+              <CardDescription className="text-base mt-3 text-slate-600 dark:text-slate-400">
                 Remplissez le formulaire ci-dessous et je vous répondrai dans les plus brefs délais
               </CardDescription>
             </CardHeader>
@@ -136,7 +136,7 @@ export default function Contact() {
                   transition={{ delay: 0.2 }}
                 >
                   <div className="space-y-2">
-                    <label htmlFor="name" className="text-sm font-medium text-slate-700">
+                    <label htmlFor="name" className="text-sm font-medium text-slate-700 dark:text-slate-300">
                       Nom complet
                     </label>
                     <Input
@@ -146,12 +146,12 @@ export default function Contact() {
                       onChange={handleChange}
                       required
                       placeholder="Jean Dupont"
-                      className="bg-white border-slate-200 text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500 transition-all duration-300"
+                      className="bg-white border-slate-200 text-slate-900 placeholder:text-slate-400 dark:bg-slate-900 dark:border-slate-700 dark:text-white dark:placeholder:text-slate-500 focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500 transition-all duration-300"
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <label htmlFor="email" className="text-sm font-medium text-slate-700">
+                    <label htmlFor="email" className="text-sm font-medium text-slate-700 dark:text-slate-300">
                       Email
                     </label>
                     <Input
@@ -162,7 +162,7 @@ export default function Contact() {
                       onChange={handleChange}
                       required
                       placeholder="jean@example.com"
-                      className="bg-white border-slate-200 text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500 transition-all duration-300"
+                      className="bg-white border-slate-200 text-slate-900 placeholder:text-slate-400 dark:bg-slate-900 dark:border-slate-700 dark:text-white dark:placeholder:text-slate-500 focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500 transition-all duration-300"
                     />
                   </div>
                 </motion.div>
@@ -174,7 +174,7 @@ export default function Contact() {
                   viewport={{ once: true }}
                   transition={{ delay: 0.3 }}
                 >
-                  <label htmlFor="subject" className="text-sm font-medium text-slate-700">
+                  <label htmlFor="subject" className="text-sm font-medium text-slate-700 dark:text-slate-300">
                     Sujet
                   </label>
                   <Input
@@ -184,7 +184,7 @@ export default function Contact() {
                     onChange={handleChange}
                     required
                     placeholder="À propos de..."
-                    className="bg-white border-slate-200 text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500 transition-all duration-300"
+                    className="bg-white border-slate-200 text-slate-900 placeholder:text-slate-400 dark:bg-slate-900 dark:border-slate-700 dark:text-white dark:placeholder:text-slate-500 focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500 transition-all duration-300"
                   />
                 </motion.div>
 
@@ -195,7 +195,7 @@ export default function Contact() {
                   viewport={{ once: true }}
                   transition={{ delay: 0.4 }}
                 >
-                  <label htmlFor="message" className="text-sm font-medium text-slate-700">
+                  <label htmlFor="message" className="text-sm font-medium text-slate-700 dark:text-slate-300">
                     Message
                   </label>
                   <Textarea
@@ -206,7 +206,7 @@ export default function Contact() {
                     required
                     placeholder="Votre message..."
                     rows={6}
-                    className="bg-white border-slate-200 text-slate-900 placeholder:text-slate-400 resize-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500 transition-all duration-300"
+                    className="bg-white border-slate-200 text-slate-900 placeholder:text-slate-400 dark:bg-slate-900 dark:border-slate-700 dark:text-white dark:placeholder:text-slate-500 resize-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500 transition-all duration-300"
                   />
                 </motion.div>
 
@@ -221,7 +221,7 @@ export default function Contact() {
                   <Button
                     type="submit"
                     disabled={loading}
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white h-14 text-base font-medium shadow-md shadow-blue-600/20 transition-all duration-300 border-0"
+                    className="w-full bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-400 text-white h-14 text-base font-medium shadow-md shadow-blue-600/20 transition-all duration-300 border-0"
                   >
                     {loading ? (
                       <>
